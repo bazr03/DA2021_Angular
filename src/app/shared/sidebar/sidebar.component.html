@@ -1,0 +1,50 @@
+<p-sidebar [(visible)]="isSidebarVisible" styleClass="p-sidebar-sm" [baseZIndex]="10000" >
+  <h3>My sidebar</h3>
+</p-sidebar>
+
+<p-toolbar class="fixed" >
+  <div class="p-toolbar-group-left">
+    <p-button
+    *ngIf="authService.currentUser$ | async"
+    icon='pi pi-align-justify'
+        styleClass="p-button-success"
+        class="p-button-outlined p-mr-4 p-d-md-none"
+        (click)="showSidebar()"></p-button>
+        <a class="link" routerLink="/" >
+          <h1 class="text-layout p-mr-4 brand" >DattingApp</h1>
+        </a>
+      <div *ngIf="authService.currentUser$ | async" >
+        <button pButton
+        type="button"
+        label="Matches"
+        class="p-button-link p-mr-1 p-d-none p-d-md-inline-flex"
+        icon="pi pi-users"
+        ></button>
+        <button pButton
+        type="button"
+        label="Lists"
+        class="p-button-link p-mr-1 p-d-none p-d-md-inline-flex"
+        icon="pi pi-list"
+        ></button>
+        <p-button label="Messages"  styleClass="p-button-link p-d-none p-d-md-inline-flex" badge="8" badgeClass="p-badge-success"></p-button>
+      </div>
+
+  </div>
+
+  <div class="p-toolbar-group-right">
+      <p-splitButton
+      *ngIf="authService.currentUser$ | async"
+          label="Welcome"
+          icon="pi pi-user"
+          [model]="items"
+          styleClass="p-button-sm"
+          ></p-splitButton>
+      <button pButton
+      *ngIf="(authService.currentUser$ | async) === undefined"
+          type="button"
+          routerLink='auth/login'
+          label="Login"
+          class="p-mr-5 p-button-help">
+      </button>
+  </div>
+</p-toolbar>
