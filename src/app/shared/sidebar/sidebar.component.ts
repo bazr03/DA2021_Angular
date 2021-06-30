@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Observable } from 'rxjs';
-import { IUser } from 'src/app/_interfaces/user';
+import { IUser } from 'src/app/_interfaces/IUser';
 import { AuthService } from 'src/app/_services/auth.service';
 
 @Component({

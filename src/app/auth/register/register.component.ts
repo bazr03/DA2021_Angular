@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { IRegister } from 'src/app/_interfaces/IRegister';
+import { AuthService } from 'src/app/_services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -23,10 +25,21 @@ import { Component, OnInit } from '@angular/core';
   ]
 })
 export class RegisterComponent implements OnInit {
-
-  constructor() { }
+  model: IRegister = {
+    username: '',
+    password:''
+  }
+  constructor(
+    private authService:AuthService
+  ) { }
 
   ngOnInit(): void {
+  }
+  onSumbit(){
+    this.authService.register(this.model)
+      .subscribe(user => {
+        // aqui debemos redireccionar a homeComponent??
+      })
   }
 
 }
