@@ -31,6 +31,7 @@ export class SidebarComponent implements OnInit {
       {
           label: 'Edit Profile',
           icon: 'pi pi-refresh',
+          routerLink: '/members/edit'
       },
       {
           label: 'Logout',

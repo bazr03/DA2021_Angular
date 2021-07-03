@@ -13,28 +13,38 @@
         <a class="link" routerLink="/" >
           <h1 class="text-layout p-mr-4 brand" >DattingApp</h1>
         </a>
-      <div *ngIf="authService.currentUser$ | async" >
-        <button pButton
-        type="button"
-        label="Matches"
-        class="p-button-link p-mr-1 p-d-none p-d-md-inline-flex"
-        icon="pi pi-users"
-        ></button>
-        <button pButton
-        type="button"
-        label="Lists"
-        class="p-button-link p-mr-1 p-d-none p-d-md-inline-flex"
-        icon="pi pi-list"
-        ></button>
-        <p-button label="Messages"  styleClass="p-button-link p-d-none p-d-md-inline-flex" badge="8" badgeClass="p-badge-success"></p-button>
-      </div>
+
+        <ng-container *ngIf="authService.currentUser$ | async" >
+          <button pButton
+          type="button"
+          label="Matches"
+          class="p-button-link p-mr-1 p-d-none p-d-md-inline-flex"
+          icon="pi pi-users"
+          [routerLink]="['/matches']" routerLinkActive="active"
+          ></button>
+          <button pButton
+          type="button"
+          label="Lists"
+          class="p-button-link p-mr-1 p-d-none p-d-md-inline-flex"
+          icon="pi pi-list"
+          [routerLink]="['/members']" routerLinkActive="active"
+          ></button>
+          <p-button
+              label="Messages"
+              styleClass="p-button-link p-d-none p-d-md-inline-flex"
+              badge="8"
+              badgeClass="p-badge-success"
+              [routerLink]="['/messages']" routerLinkActive="active"
+              ></p-button>
+        </ng-container>
+
 
   </div>
 
   <div class="p-toolbar-group-right">
       <p-splitButton
-      *ngIf="authService.currentUser$ | async"
-          label="Welcome"
+      *ngIf="(authService.currentUser$ | async) as user"
+          [label]="'Welcome ' + user.username | titlecase "
           icon="pi pi-user"
           [model]="items"
           styleClass="p-button-sm"

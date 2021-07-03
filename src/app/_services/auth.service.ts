@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators'
 import { environment } from 'src/environments/environment';
-import { ILogin } from '../auth/interfaces/login';
+import { ILogin } from '../auth/interfaces/ILogin';
 import { IUser } from '../_interfaces/IUser';
-import { IRegister } from "../_interfaces/IRegister";
+
 
 @Injectable({
   providedIn: 'root'
@@ -13,16 +14,14 @@ import { IRegister } from "../_interfaces/IRegister";
 export class AuthService {
   _baseUrl: string = environment.baseUrl;
   private _currentUserSource = new ReplaySubject<IUser>(1);
-  private loggedIn: boolean = false;
   currentUser$ = this._currentUserSource.asObservable();
 
   constructor(
-    private http:HttpClient
+    private http:HttpClient,
+    private router:Router
   ) { }
 
-  get isLoogedIn():boolean {
-    return this.loggedIn;
-  }
+
 
   login(model:ILogin){
     const url = `${this._baseUrl}/account/login`;
@@ -32,7 +31,6 @@ export class AuthService {
           const user = res;
           if(user){
             localStorage.setItem('datApp_user', JSON.stringify(user));
-            this.loggedIn = true;
             this._currentUserSource.next(user);
           }
         })
@@ -41,16 +39,15 @@ export class AuthService {
 
   setCurrentUser(user:IUser){
     this._currentUserSource.next(user);
-    this.loggedIn = true;
   }
 
   logout(){
     localStorage.removeItem('datApp_user');
     this._currentUserSource.next(undefined);
-    this.loggedIn = false;
+    this.router.navigateByUrl('/');
   }
 
-  register(model:IRegister){
+  register(model:ILogin){
     const url = `${this._baseUrl}/account/register`;
 
     return this.http.post<IUser>(url, model)

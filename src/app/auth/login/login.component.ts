@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/_services/auth.service';
-import { ILogin } from '../interfaces/login';
+import { ILogin } from '../interfaces/ILogin';
 
 
 @Component({
@@ -30,24 +31,21 @@ export class LoginComponent implements OnInit {
     username: '',
     password:''
   };
-  loggedIn: boolean = false;
 
   constructor(
-    private authService:AuthService
+    private authService:AuthService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
   }
 
   onSubmit(){
+
     this.authService.login(this.model)
       .subscribe( res => {
-        console.log(res);
-        this.loggedIn = true;
-      },
-      err => {
-        console.log(err);
-      });
+        this.router.navigateByUrl('/matches');
+      } );
   }
 
 }

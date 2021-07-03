@@ -1,0 +1,18 @@
+<div class="text-layout" >
+  <h4>Internal server error - refreshing the page will make the error desappear!</h4>
+
+  <ng-container *ngIf="error">
+    <h5 class="text-error" >Error: {{error.message}}</h5>
+    <p><b>Note: If you are seeing this then Angular is probably not to be blame</b></p>
+    <p>What to do next?</p>
+    <ol>
+      <li>Check Chrome dev tools</li>
+      <li>Inspect the network tab</li>
+      <li>Check the failing request</li>
+      <li>Examine the request URL</li>
+    </ol>
+    <p>Following is the stack trace error</p>
+    <code class="p-mt-5 text-warn"  >{{error.details}}</code>
+  </ng-container>
+
+</div>

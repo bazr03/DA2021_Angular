@@ -6,6 +6,12 @@ import {ToolbarModule} from 'primeng/toolbar';
 import {BadgeModule} from 'primeng/badge';
 import {SplitButtonModule} from 'primeng/splitbutton';
 import {InputTextModule} from 'primeng/inputtext';
+import {CardModule} from 'primeng/card';
+import {TabViewModule} from 'primeng/tabview';
+import {GalleriaModule} from 'primeng/galleria';
+import {InputTextareaModule} from 'primeng/inputtextarea';
+
+
 
 
 
@@ -17,7 +23,11 @@ import {InputTextModule} from 'primeng/inputtext';
     ToolbarModule,
     BadgeModule,
     SplitButtonModule,
-    InputTextModule
+    InputTextModule,
+    CardModule,
+    TabViewModule,
+    GalleriaModule,
+    InputTextareaModule
   ]
 })
 export class NgPrimeModule { }

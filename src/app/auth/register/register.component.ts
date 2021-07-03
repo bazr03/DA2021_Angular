@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IRegister } from 'src/app/_interfaces/IRegister';
+import { IRegister } from '../interfaces/IRegister';
 import { AuthService } from 'src/app/_services/auth.service';
 
 @Component({
@@ -27,8 +27,10 @@ import { AuthService } from 'src/app/_services/auth.service';
 export class RegisterComponent implements OnInit {
   model: IRegister = {
     username: '',
-    password:''
+    password:'',
+    confirmPassword: ''
   }
+  error: string = '';
   constructor(
     private authService:AuthService
   ) { }
@@ -36,7 +38,16 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
   }
   onSumbit(){
-    this.authService.register(this.model)
+
+    if(this.model.password.trim() !== this.model.confirmPassword.trim()){
+      this.error = 'El password no coincide';
+      return;
+    }
+
+    this.authService.register({
+      username:this.model.username,
+      password:this.model.password
+    })
       .subscribe(user => {
         // aqui debemos redireccionar a homeComponent??
       })

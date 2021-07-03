@@ -1,1 +1,11 @@
-<p>users-list works!</p>
+<h1 class="text-layout" >Users List </h1>
+<div class="p-grid" >
+  <ng-container *ngIf="users$ | async as users; else loading" >
+    <div class="p-col-6 p-md-3 p-lg-2" *ngFor="let user of users" >
+      <app-user-card [member]="user" ></app-user-card>
+    </div>
+  </ng-container>
+  <ng-template #loading >
+    <h2 class="text-layout">Loading...</h2>
+  </ng-template>
+</div>
