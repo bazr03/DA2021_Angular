@@ -23,9 +23,10 @@ export class UserResolver implements Resolve<IMember> {
     if(user){
       console.log('Usuario ya en memoria');
       return user;
-    } else {
-      console.log('Usuario NO en memoria, FETCHING...');
-      return this.usersService.fetchUser(username);
     }
+
+    console.log('Usuario NO en memoria, FETCHING...');
+    return this.usersService.fetchUser(username);
+
   }
 }

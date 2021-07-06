@@ -3,7 +3,7 @@
     <h1 class="text-layout">Your Profile</h1>
   </div>
   <div class="p-col-12 p-md-8 ">
-    <p class="text-error" >
+    <p class="text-error"  >
       <strong>Information:</strong>
       You have made changes. Any unsaved chage will be lost!
     </p>
@@ -39,8 +39,11 @@
                 label="Save Changes"
                 styleClass="p-button-danger p-mt-1"></p-button> -->
                 <button pButton
+                        [disabled]="!editForm.dirty"
                         type="submit"
                         label="Save Changes"
+                        icon='pi pi-check'
+                        [loading]="isLoading"
                         form="editForm" >
                 </button>
           </div>

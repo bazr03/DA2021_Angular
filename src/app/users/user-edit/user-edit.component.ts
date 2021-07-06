@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { Observable } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
@@ -13,8 +14,15 @@ import { IMember } from '../interfaces/IMember';
   ]
 })
 export class UserEditComponent implements OnInit {
+  @ViewChild('editForm') editForm!:NgForm;
+  @HostListener('window:beforeunload', ['$event']) unloadNotification($event:any){
+    if(this.editForm.dirty){
+      $event.returnValue = true;
+    }
+  }
   member$!: Observable<IMember>;
   member!: IMember;
+  isLoading = false;
 
   constructor(
     private authService: AuthService,
@@ -33,13 +41,20 @@ export class UserEditComponent implements OnInit {
   }
 
   updateMember(){
-    console.log('click')
-    console.log(this.member);
-    this.messageService.add({
-      key: 'tr',
-      severity:'success',
-      summary:`Updated Completed`,
-      detail:`Profile update successfully`});
+    this.isLoading = true;
+    this.usersService.updateMember(this.member)
+      .subscribe(() => {
+        this.messageService.add({
+          key: 'tr',
+          severity:'success',
+          summary:`Updated Completed`,
+          detail:`Profile update successfully`});
+
+        this.editForm.reset(this.member);
+        this.isLoading = false;
+      }, err => {
+        this.isLoading = false;
+      });
   }
 
 }

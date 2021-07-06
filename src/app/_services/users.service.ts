@@ -33,8 +33,7 @@ export class UsersService {
             console.log('combinando users :(');
             updatedUsers = fmembers.map( fuser => {
               const user = users.find(u => u.id === fuser.id);
-              const userToReturn = user? user: fuser;
-              return userToReturn
+              return user? user: fuser;
             } )
           }else {
             updatedUsers = fmembers;
@@ -53,8 +52,8 @@ export class UsersService {
       .pipe(
         tap(user => {
           console.log('actualizando usersss from tap')
-          const updatedUsers = [...this.getUsers(), user];
-            this._setUsers(updatedUsers);
+          const updatedUsers = this.updatelocalMember(user);
+          this._setUsers(updatedUsers);
         })
       )
 
@@ -72,5 +71,24 @@ export class UsersService {
   // Get last value without subscribing to the users$ observable (syncronously)
   getUsers(): IMember[] {
     return this._membersSource.getValue();
+  }
+
+  updateMember(member:IMember){
+    const url = `${this.baseUrl}/users`;
+    return this.http.put(url, member)
+      .pipe(
+        map(() => {
+          const updatedUsers = this.updatelocalMember(member);
+          this._setUsers(updatedUsers);
+        })
+      )
+  }
+
+  private updatelocalMember(member:IMember):IMember[]{
+    const users = this.getUsers();
+    const updatedUsers = users.map(user => {
+      return user.id === member.id ? member:user;
+    })
+    return updatedUsers;
   }
 }

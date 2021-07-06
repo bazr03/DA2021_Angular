@@ -12,6 +12,8 @@ import { TestErrorComponent } from './test-error/test-error.component';
 import { ErrorInterceptor } from './_interceptors/error.interceptor';
 import { ErrorServerComponent } from './error-server/error-server.component';
 import { JwtInterceptor } from './_interceptors/jwt.interceptor';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { LoadingInterceptor } from './_interceptors/loading.interceptor';
 
 
 
@@ -29,12 +31,14 @@ import { JwtInterceptor } from './_interceptors/jwt.interceptor';
     HttpClientModule,
     ToastModule,
     AppRoutingModule,
-    SharedModule
+    SharedModule,
+    NgxSpinnerModule
   ],
   providers: [
     MessageService,
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })

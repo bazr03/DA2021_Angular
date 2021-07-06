@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { PreventUnsavedChangesGuard } from '../_guards/prevent-unsaved-changes.guard';
 import { UserDetailComponent } from './user-detail/user-detail.component';
 import { UserEditComponent } from './user-edit/user-edit.component';
 import { UserResolver } from './user.resolver';
@@ -14,7 +15,8 @@ const routes:Routes = [
   },
   {
     path:'edit',
-    component: UserEditComponent
+    component: UserEditComponent,
+    canDeactivate: [PreventUnsavedChangesGuard]
   },
   {
     path:':username',
