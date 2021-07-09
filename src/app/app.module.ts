@@ -6,8 +6,8 @@ import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
-import {MessageService} from 'primeng/api';
-import {ToastModule} from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 import { TestErrorComponent } from './test-error/test-error.component';
 import { ErrorInterceptor } from './_interceptors/error.interceptor';
 import { ErrorServerComponent } from './error-server/error-server.component';
@@ -15,16 +15,8 @@ import { JwtInterceptor } from './_interceptors/jwt.interceptor';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoadingInterceptor } from './_interceptors/loading.interceptor';
 
-
-
-
-
 @NgModule({
-  declarations: [
-    AppComponent,
-    TestErrorComponent,
-    ErrorServerComponent,
-  ],
+  declarations: [AppComponent, TestErrorComponent, ErrorServerComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -32,7 +24,7 @@ import { LoadingInterceptor } from './_interceptors/loading.interceptor';
     ToastModule,
     AppRoutingModule,
     SharedModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
   ],
   providers: [
     MessageService,
@@ -40,6 +32,6 @@ import { LoadingInterceptor } from './_interceptors/loading.interceptor';
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
