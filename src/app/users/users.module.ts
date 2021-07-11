@@ -9,6 +9,7 @@ import { NgPrimeModule } from '../ng-prime/ng-prime.module';
 import {ImagePipe} from '../_pipes/image.pipe';
 import { UserEditComponent } from './user-edit/user-edit.component';
 import { FormsModule } from '@angular/forms';
+import { PhotoEditorComponent } from './photo-editor/photo-editor.component';
 
 
 
@@ -19,7 +20,8 @@ import { FormsModule } from '@angular/forms';
     WithLoadingPipe,
     UserCardComponent,
     ImagePipe,
-    UserEditComponent
+    UserEditComponent,
+    PhotoEditorComponent
   ],
   imports: [
     CommonModule,

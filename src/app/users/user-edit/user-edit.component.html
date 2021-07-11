@@ -1,127 +1,136 @@
-<div class="p-grid p-mt-5" >
-  <div class="p-col-12 p-md-4 ">
+<div class="p-grid p-mt-5">
+  <div class="p-col-12 p-md-4">
     <h1 class="text-layout">Your Profile</h1>
   </div>
-  <div class="p-col-12 p-md-8 ">
-    <p class="text-error"  >
+  <div class="p-col-12 p-md-8">
+    <p class="text-error">
       <strong>Information:</strong>
       You have made changes. Any unsaved chage will be lost!
     </p>
   </div>
-  <ng-container *ngIf="member$ | async; else loading" >
-    <div class="p-col-12 p-md-4 ">
-      <p-card [header]="member.knownAs" [subheader]="member.city"  styleClass="p-card-shadow" [style]="{'max-width': '20rem'}" >
+  <ng-container *ngIf="member$ | async; else loading">
+    <div class="p-col-12 p-md-4">
+      <p-card
+        [header]="member.knownAs"
+        [subheader]="member.city"
+        styleClass="p-card-shadow"
+        [style]="{ 'max-width': '20rem' }"
+      >
         <ng-template pTemplate="header">
-            <img [alt]="member.knownAs" [src]="member.photoUrl" class="card__img" >
+          <img
+            [alt]="member.knownAs"
+            [src]="member.photoUrl"
+            class="card__img"
+          />
         </ng-template>
         <div>
           <strong>Location:</strong>
-          <p>{{member.city}}, {{member.country}}</p>
+          <p>{{ member.city }}, {{ member.country }}</p>
         </div>
         <div>
           <strong>Age:</strong>
-          <p>{{member.age}}</p>
+          <p>{{ member.age }}</p>
         </div>
         <div>
           <strong>Member since:</strong>
-          <p>{{member.created}}</p>
+          <p>{{ member.created }}</p>
         </div>
         <div>
           <strong>Last active:</strong>
-          <p>{{member.lastActive}}</p>
+          <p>{{ member.lastActive }}</p>
         </div>
-        <ng-template pTemplate="footer" >
-          <div class="p-d-flex p-jc-center p-ai-center" >
+        <ng-template pTemplate="footer">
+          <div class="p-d-flex p-jc-center p-ai-center">
             <!-- <p-button
                 type="submit"
                 form="editForm"
                 icon="pi pi-save"
                 label="Save Changes"
                 styleClass="p-button-danger p-mt-1"></p-button> -->
-                <button pButton
-                        [disabled]="!editForm.dirty"
-                        type="submit"
-                        label="Save Changes"
-                        icon='pi pi-check'
-                        [loading]="isLoading"
-                        form="editForm" >
-                </button>
+            <button
+              pButton
+              [disabled]="!editForm.dirty"
+              type="submit"
+              label="Save Changes"
+              icon="pi pi-check"
+              [loading]="isLoading"
+              form="editForm"
+            ></button>
           </div>
         </ng-template>
       </p-card>
     </div>
-    <div class="p-col-12 p-md-8 ">
+    <div class="p-col-12 p-md-8">
       <p-tabView>
         <p-tabPanel>
           <ng-template pTemplate="header">
-            <i class="pi pi-calendar p-mr-2" ></i>
-            <span>About {{member.knownAs}} </span>
+            <i class="pi pi-calendar p-mr-2"></i>
+            <span>About {{ member.knownAs }} </span>
           </ng-template>
           <h4>Description</h4>
-          <form #editForm="ngForm"
-                (ngSubmit)="updateMember()"
-                id="editForm"
-                >
-          <textarea pInputTextarea
-                    name="introduction"
-                    [(ngModel)]="member.introduction"
-                    rows="8"
-                    cols="60"
-                    >
+          <form #editForm="ngForm" (ngSubmit)="updateMember()" id="editForm">
+            <textarea
+              pInputTextarea
+              name="introduction"
+              [(ngModel)]="member.introduction"
+              rows="8"
+              cols="60"
+            >
             </textarea>
-          <h4>Looking for:</h4>
-          <textarea pInputTextarea
-                    name="lookingFor"
-                    [(ngModel)]="member.lookingFor"
-                    rows="8"
-                    cols="60"
-                    >
+            <h4>Looking for:</h4>
+            <textarea
+              pInputTextarea
+              name="lookingFor"
+              [(ngModel)]="member.lookingFor"
+              rows="8"
+              cols="60"
+            >
             </textarea>
             <h4>Interests:</h4>
-          <textarea pInputTextarea
-                    name="interests"
-                    [(ngModel)]="member.interests"
-                    rows="8"
-                    cols="60"
-                    >
+            <textarea
+              pInputTextarea
+              name="interests"
+              [(ngModel)]="member.interests"
+              rows="8"
+              cols="60"
+            >
             </textarea>
-          <h4>Location details</h4>
-          <div class="p-inputgroup">
-            <span class="p-inputgroup-addon"><i class="pi pi-map-marker"></i></span>
-            <input
-                  type="text"
-                  pInputText
-                  placeholder="City"
-                  name="city"
-                  [(ngModel)]="member.city"
-                  >
-          </div>
-          <div class="p-inputgroup">
-            <span class="p-inputgroup-addon"><i class="pi pi-map"></i></span>
-            <input
-                  type="text"
-                  pInputText
-                  placeholder="Country"
-                  name="country"
-                  [(ngModel)]="member.country"
-                  >
-          </div>
-        </form>
-      </p-tabPanel>
-      <p-tabPanel >
+            <h4>Location details</h4>
+            <div class="p-inputgroup">
+              <span class="p-inputgroup-addon"
+                ><i class="pi pi-map-marker"></i
+              ></span>
+              <input
+                type="text"
+                pInputText
+                placeholder="City"
+                name="city"
+                [(ngModel)]="member.city"
+              />
+            </div>
+            <div class="p-inputgroup">
+              <span class="p-inputgroup-addon"><i class="pi pi-map"></i></span>
+              <input
+                type="text"
+                pInputText
+                placeholder="Country"
+                name="country"
+                [(ngModel)]="member.country"
+              />
+            </div>
+          </form>
+        </p-tabPanel>
+        <p-tabPanel>
           <ng-template pTemplate="header">
-            <i class="pi pi-user p-mr-2" ></i>
+            <i class="pi pi-user p-mr-2"></i>
             <span>Edit Photos</span>
           </ng-template>
-          <h4>Photo edit will go here</h4>
-      </p-tabPanel>
+          <app-photo-editor [member]="member"></app-photo-editor>
+        </p-tabPanel>
       </p-tabView>
-
-
     </div>
   </ng-container>
-  <ng-template #loading >
+  <ng-template #loading>
     <h2 class="text-layout">Loading...</h2>
   </ng-template>
 </div>
-
