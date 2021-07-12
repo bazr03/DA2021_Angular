@@ -82,17 +82,19 @@ export class UsersService {
       currentUser = { ...user };
     });
 
-    console.log(photo);
-    console.log(currentUser);
-
     const url = `${this.baseUrl}/users/set-main-photo/${photo.id}`;
     return this.http.put(url, {}).pipe(
       tap(() => {
         currentUser.photoUrl = photo.url;
-        console.log(currentUser);
         this.authService.setCurrentUser(currentUser);
       })
     );
+  }
+
+  deletePhoto(photoId: number) {
+    const url = `${this.baseUrl}/users/delete-photo/${photoId}`;
+
+    return this.http.delete(url);
   }
 
   private updatelocalMember(member: IMember): IMember[] {

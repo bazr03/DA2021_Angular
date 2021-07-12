@@ -26,6 +26,8 @@
         type="button"
         icon="pi pi-trash"
         iconPos="left"
+        [disabled]="photo.isMain"
+        (click)="deletePhoto(photo.id)"
         class="p-button-sm p-button-danger"
       ></button>
     </div>
