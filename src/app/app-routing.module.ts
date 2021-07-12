@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ErrorPageComponent } from './error-page/error-page.component';
+import { ErrorServerComponent } from './error-server/error-server.component';
+import { TestErrorComponent } from './test-error/test-error.component';
+import { AuthGuard } from './_guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -12,8 +15,36 @@ const routes: Routes = [
     loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
   },
   {
+    path: '',
+    runGuardsAndResolvers:'always',
+    canActivate: [AuthGuard],
+    children:[
+      {
+        path:'members',
+        canActivate: [AuthGuard],
+        loadChildren: () => import('./users/users.module').then(m => m.UsersModule)
+      },
+      {
+        path:'matches',
+        loadChildren: () => import('./matches/matches.module').then(m => m.MatchesModule)
+      },
+      {
+        path:'messages',
+        loadChildren: () => import('./messages/messages.module').then(m => m.MessagesModule)
+      },
+    ]
+  },
+  {
+    path:'errors',
+    component:TestErrorComponent
+  },
+  {
     path:'404',
     component:ErrorPageComponent
+  },
+  {
+    path:'server-error',
+    component:ErrorServerComponent
   },
   {
     path:'**',

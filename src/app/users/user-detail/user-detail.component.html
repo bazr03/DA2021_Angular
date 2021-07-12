@@ -1,0 +1,80 @@
+<div class="p-grid p-mt-5">
+  <div class="p-col-12 p-md-4">
+    <p-card
+      [header]="member.knownAs"
+      [subheader]="member.city"
+      styleClass="p-card-shadow"
+      [style]="{ 'max-width': '20rem' }"
+    >
+      <ng-template pTemplate="header">
+        <img [alt]="member.knownAs" [src]="member.photoUrl" class="card__img" />
+      </ng-template>
+      <div>
+        <strong>Location:</strong>
+        <p>{{ member.city }}, {{ member.country }}</p>
+      </div>
+      <div>
+        <strong>Age:</strong>
+        <p>{{ member.age }}</p>
+      </div>
+      <div>
+        <strong>Member since:</strong>
+        <p>{{ member.created }}</p>
+      </div>
+      <div>
+        <strong>Last active:</strong>
+        <p>{{ member.lastActive }}</p>
+      </div>
+      <ng-template pTemplate="footer">
+        <div class="card_footer">
+          <p-button
+            icon="pi pi-heart"
+            label="Like"
+            styleClass="p-button-danger p-mt-1"
+          ></p-button>
+          <p-button
+            icon="pi pi-envelope"
+            label="Message"
+            styleClass="p-button-info p-mt-1"
+          ></p-button>
+        </div>
+      </ng-template>
+    </p-card>
+  </div>
+  <div class="p-col-12 p-md-6">
+    <p-tabView>
+      <p-tabPanel>
+        <ng-template pTemplate="header">
+          <i class="pi pi-calendar p-mr-2"></i>
+          <span>About {{ member.knownAs }} </span>
+        </ng-template>
+        <h4>Description</h4>
+        <p>{{ member.introduction }}</p>
+        <h4>Looking for:</h4>
+        <p>{{ member.lookingFor }}</p>
+      </p-tabPanel>
+      <p-tabPanel>
+        <ng-template pTemplate="header">
+          <i class="pi pi-user p-mr-2"></i>
+          <span>Interests</span>
+        </ng-template>
+        <h4>Interests</h4>
+        <p>{{ member.interests }}</p>
+      </p-tabPanel>
+      <p-tabPanel>
+        <ng-template pTemplate="header">
+          <i class="pi pi-user p-mr-2"></i>
+          <span>Messages</span>
+        </ng-template>
+        <h4>Messages will go here!</h4>
+      </p-tabPanel>
+      <p-tabPanel>
+        <ng-template pTemplate="header">
+          <i class="pi pi-user p-mr-2"></i>
+          <span>Photos</span>
+        </ng-template>
+        <app-img-gallery [images]="images"></app-img-gallery>
+      </p-tabPanel>
+    </p-tabView>
+  </div>
+</div>

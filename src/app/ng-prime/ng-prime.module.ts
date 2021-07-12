@@ -1,13 +1,17 @@
 import { NgModule } from '@angular/core';
-import {MenubarModule} from 'primeng/menubar';
-import {ButtonModule} from 'primeng/button';
-import {SidebarModule} from 'primeng/sidebar';
-import {ToolbarModule} from 'primeng/toolbar';
-import {BadgeModule} from 'primeng/badge';
-import {SplitButtonModule} from 'primeng/splitbutton';
-import {InputTextModule} from 'primeng/inputtext';
-
-
+import { MenubarModule } from 'primeng/menubar';
+import { ButtonModule } from 'primeng/button';
+import { SidebarModule } from 'primeng/sidebar';
+import { ToolbarModule } from 'primeng/toolbar';
+import { BadgeModule } from 'primeng/badge';
+import { SplitButtonModule } from 'primeng/splitbutton';
+import { InputTextModule } from 'primeng/inputtext';
+import { CardModule } from 'primeng/card';
+import { TabViewModule } from 'primeng/tabview';
+import { GalleriaModule } from 'primeng/galleria';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { FileUploadModule } from 'primeng/fileupload';
+import { AvatarModule } from 'primeng/avatar';
 
 @NgModule({
   exports: [
@@ -17,7 +21,13 @@ import {InputTextModule} from 'primeng/inputtext';
     ToolbarModule,
     BadgeModule,
     SplitButtonModule,
-    InputTextModule
-  ]
+    InputTextModule,
+    CardModule,
+    TabViewModule,
+    GalleriaModule,
+    InputTextareaModule,
+    FileUploadModule,
+    AvatarModule,
+  ],
 })
-export class NgPrimeModule { }
+export class NgPrimeModule {}

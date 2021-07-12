@@ -1,0 +1,48 @@
+<div class="p-grid">
+  <div
+    class="p-col-4 p-md-3 p-lg-2"
+    *ngFor="let photo of member.photos; let i = index"
+  >
+    <img
+      [src]="photo.url"
+      [alt]="member.knownAs + '_' + i"
+      class="img-fluid p-p-1"
+    />
+    <div class="p-d-flex p-jc-around p-ai-center">
+      <button
+        pButton
+        [disabled]="photo.isMain"
+        (click)="setMainPhoto(photo)"
+        [ngClass]="
+          photo.isMain
+            ? 'p-button-sm '
+            : 'p-button-sm p-button-outlined p-button-success'
+        "
+        type="button"
+        label="Main"
+      ></button>
+      <button
+        pButton
+        type="button"
+        icon="pi pi-trash"
+        iconPos="left"
+        [disabled]="photo.isMain"
+        (click)="deletePhoto(photo.id)"
+        class="p-button-sm p-button-danger"
+      ></button>
+    </div>
+  </div>
+</div>
+<h4 class="p-mt-3">Add Photos</h4>
+<div class="card">
+  <p-fileUpload
+    #fileUpload
+    name="file"
+    [customUpload]="true"
+    [multiple]="true"
+    accept="image/*"
+    [maxFileSize]="4 * 1024 * 1024"
+    (uploadHandler)="onUpload($event)"
+  >
+  </p-fileUpload>
+</div>

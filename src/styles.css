@@ -1,13 +1,46 @@
 /* You can add global styles to this file, and also import other style files */
-html, body {
+html,
+body {
   margin: 10px;
   background-color: var(--surface-b);
-  font-family:var(--font-family);
+  font-family: var(--font-family);
 }
-.text-layout{
+.text-layout {
   color: var(--text-color);
 }
-.link{
+.text-error {
+  color: var(--pink-600);
+}
+.text-warn {
+  color: var(--yellow-400);
+}
+.link {
   color: inherit;
   text-decoration: none;
+}
+.active .p-button-label,
+.active .p-button-icon {
+  color: var(--pink-400);
+}
+
+.box {
+  background-color: var(--surface-e);
+  text-align: center;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  border-radius: 4px;
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14),
+    0 1px 3px 0 rgba(0, 0, 0, 0.12);
+}
+.card_footer {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.img-fluid {
+  width: 100%;
+  height: auto;
 }
