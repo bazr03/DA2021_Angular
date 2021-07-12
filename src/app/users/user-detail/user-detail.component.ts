@@ -1,61 +1,50 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Data } from '@angular/router';
-import { UsersService } from 'src/app/_services/users.service';
+import { IImage } from '../interfaces/IImage';
 import { IMember } from '../interfaces/IMember';
-
-interface IImages {
-  previewImageSrc:string;
-  thumbnailImageSrc:string;
-  alt:string;
-  title:string;
-}
 
 @Component({
   selector: 'app-user-detail',
   templateUrl: './user-detail.component.html',
-  styles: [
-  ]
+  styles: [],
 })
 export class UserDetailComponent implements OnInit {
-  member!:IMember;
-  images: IImages[] = [];
+  member!: IMember;
+  images: IImage[] = [];
 
-  responsiveOptions:any[] = [
+  responsiveOptions: any[] = [
     {
-        breakpoint: '1024px',
-        numVisible: 5
+      breakpoint: '1024px',
+      numVisible: 5,
     },
     {
-        breakpoint: '768px',
-        numVisible: 3
+      breakpoint: '768px',
+      numVisible: 3,
     },
     {
-        breakpoint: '560px',
-        numVisible: 1
-    }
-];
+      breakpoint: '560px',
+      numVisible: 1,
+    },
+  ];
 
-  constructor(
-    private route: ActivatedRoute
-  ) { }
+  constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.route.data.subscribe((data:Data) => {
+    this.route.data.subscribe((data: Data) => {
       this.member = data['member'];
       this.setImages();
     });
   }
-  setImages(){
-    this.member.photos.forEach(photo => {
-      if(photo?.url){
+  setImages() {
+    this.member.photos.forEach((photo) => {
+      if (photo?.url) {
         this.images.push({
-          "previewImageSrc": `${photo?.url}`,
-          "thumbnailImageSrc": `${photo?.url}`,
-          "alt": `photo of ${this.member.knownAs}`,
-          "title": `${this.member.knownAs}`
+          previewImageSrc: `${photo?.url}`,
+          thumbnailImageSrc: `${photo?.url}`,
+          alt: `photo of ${this.member.knownAs}`,
+          title: `${this.member.knownAs}`,
         });
       }
     });
   }
-
 }

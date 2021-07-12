@@ -1,0 +1,25 @@
+<p-galleria
+  *ngIf="images.length > 0"
+  [value]="images"
+  [responsiveOptions]="responsiveOptions"
+  [numVisible]="5"
+>
+  <ng-container *ngIf="images.length === 0">
+    <h4 class="text-warn">No images added yet!</h4>
+  </ng-container>
+  <ng-template pTemplate="item" let-item>
+    <img
+      [src]="item.previewImageSrc"
+      [alt]="item.alt"
+      style="width: 100%; display: block; max-width: 400px"
+    />
+  </ng-template>
+  <ng-template pTemplate="thumbnail" let-item>
+    <div class="p-grid p-nogutter p-justify-center">
+      <img
+        [src]="item.thumbnailImageSrc"
+        style="max-width: 90px; max-height: 90px"
+      />
+    </div>
+  </ng-template>
+</p-galleria>

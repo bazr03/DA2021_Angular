@@ -11,6 +11,7 @@ import { TabViewModule } from 'primeng/tabview';
 import { GalleriaModule } from 'primeng/galleria';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { FileUploadModule } from 'primeng/fileupload';
+import { AvatarModule } from 'primeng/avatar';
 
 @NgModule({
   exports: [
@@ -26,6 +27,7 @@ import { FileUploadModule } from 'primeng/fileupload';
     GalleriaModule,
     InputTextareaModule,
     FileUploadModule,
+    AvatarModule,
   ],
 })
 export class NgPrimeModule {}

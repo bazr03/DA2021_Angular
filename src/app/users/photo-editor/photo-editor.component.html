@@ -9,7 +9,18 @@
       class="img-fluid p-p-1"
     />
     <div class="p-d-flex p-jc-around p-ai-center">
-      <button pButton type="button" label="Main" class="p-button-sm"></button>
+      <button
+        pButton
+        [disabled]="photo.isMain"
+        (click)="setMainPhoto(photo)"
+        [ngClass]="
+          photo.isMain
+            ? 'p-button-sm '
+            : 'p-button-sm p-button-outlined p-button-success'
+        "
+        type="button"
+        label="Main"
+      ></button>
       <button
         pButton
         type="button"
@@ -23,19 +34,13 @@
 <h4 class="p-mt-3">Add Photos</h4>
 <div class="card">
   <p-fileUpload
-    name="myfile[]"
-    [url]="url"
+    #fileUpload
+    name="file"
+    [customUpload]="true"
     [multiple]="true"
     accept="image/*"
     [maxFileSize]="4 * 1024 * 1024"
-    (onUpload)="onUpload($event)"
+    (uploadHandler)="onUpload($event)"
   >
-    <ng-template pTemplate="content">
-      <ul *ngIf="uploadedFiles.length">
-        <li *ngFor="let file of uploadedFiles">
-          {{ file.name }} - {{ file.size }} bytes
-        </li>
-      </ul>
-    </ng-template>
   </p-fileUpload>
 </div>
