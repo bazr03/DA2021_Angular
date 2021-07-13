@@ -26,17 +26,22 @@
         >
         </app-text-input>
 
-        <div class="p-field">
-          <div class="p-inputgroup">
-            <span class="p-inputgroup-addon"
-              ><i class="pi pi-calendar-plus"></i
-            ></span>
-            <p-calendar
-              formControlName="dateOfBirth"
-              showButtonBar="true"
-            ></p-calendar>
-          </div>
-        </div>
+        <!-- <app-text-input
+          [formControl]="$any(registerForm.controls['dateOfBirth'])"
+          [label]="'Date of Birth'"
+          [icon]="'pi-calendar-plus'"
+          [type]="'date'"
+        >
+        </app-text-input> -->
+
+        <app-date-input
+          [formControl]="$any(registerForm.controls['dateOfBirth'])"
+          [label]="'Date of Birth'"
+          [icon]="'pi-calendar-plus'"
+          [Id]="'DoB'"
+          [maxDate]="maxDate"
+          [yearRange]="yearRange"
+        ></app-date-input>
 
         <app-text-input
           [formControl]="$any(registerForm.controls['city'])"

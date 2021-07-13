@@ -9,6 +9,9 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
+// import * as moment from 'moment';
+
+// TODO: Revisar Calendar de PrimeNg
 
 @Component({
   selector: 'app-register',
@@ -36,56 +39,19 @@ import {
 export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;
   es: any;
+  birthDate!: Date;
+  maxDate!: Date;
+  yearRange: string = '';
 
-  constructor(private authService: AuthService, private fb: FormBuilder) {}
+  constructor(private authService: AuthService, private fb: FormBuilder) {
+    this.birthDate = new Date();
+  }
 
   ngOnInit(): void {
     this.initializeForm();
-
-    this.es = {
-      firstDayOfWeek: 1,
-      dayNames: [
-        'domingo',
-        'lunes',
-        'martes',
-        'miércoles',
-        'jueves',
-        'viernes',
-        'sábado',
-      ],
-      dayNamesShort: ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'],
-      dayNamesMin: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
-      monthNames: [
-        'enero',
-        'febrero',
-        'marzo',
-        'abril',
-        'mayo',
-        'junio',
-        'julio',
-        'agosto',
-        'septiembre',
-        'octubre',
-        'noviembre',
-        'diciembre',
-      ],
-      monthNamesShort: [
-        'ene',
-        'feb',
-        'mar',
-        'abr',
-        'may',
-        'jun',
-        'jul',
-        'ago',
-        'sep',
-        'oct',
-        'nov',
-        'dic',
-      ],
-      today: 'Hoy',
-      clear: 'Borrar',
-    };
+    this.maxDate = new Date();
+    this.maxDate.setFullYear(this.maxDate.getFullYear() - 18);
+    this.yearRange = `1960:${this.maxDate.getFullYear()}`;
   }
 
   initializeForm() {
@@ -93,7 +59,7 @@ export class RegisterComponent implements OnInit {
       gender: ['male'],
       username: ['', Validators.required],
       knownAs: ['', Validators.required],
-      dateOfBirth: ['', Validators.required],
+      dateOfBirth: [this.maxDate, Validators.required],
       city: ['', Validators.required],
       country: ['', Validators.required],
       password: [

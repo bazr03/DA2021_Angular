@@ -8,6 +8,7 @@ import { ImagePipe } from '../_pipes/image.pipe';
 import { TextInputComponent } from './text-input/text-input.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
+import { DateInputComponent } from './date-input/date-input.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { CalendarModule } from 'primeng/calendar';
     MainToolbarComponent,
     ImagePipe,
     TextInputComponent,
+    DateInputComponent,
   ],
   imports: [CommonModule, NgPrimeModule, ReactiveFormsModule, CalendarModule],
   exports: [
@@ -25,6 +27,7 @@ import { CalendarModule } from 'primeng/calendar';
     ImagePipe,
     TextInputComponent,
     ReactiveFormsModule,
+    DateInputComponent,
   ],
 })
 export class SharedModule {}

@@ -1,0 +1,24 @@
+<div class="p-field">
+  <label for="DoB">{{ label }}</label>
+  <div class="p-inputgroup">
+    <span class="p-inputgroup-addon"><i class="pi {{ icon }}"></i></span>
+    <p-calendar
+      [id]="Id"
+      [formControl]="$any(ngControl.control)"
+      dateFormat="mm-dd-yy"
+      [readonlyInput]="true"
+      [maxDate]="maxDate"
+      [monthNavigator]="true"
+      [yearNavigator]="true"
+      [yearRange]="yearRange"
+      [class.ng-dirty]="ngControl.touched && ngControl.invalid"
+    ></p-calendar>
+  </div>
+
+  <small
+    class="p-error"
+    *ngIf="ngControl.touched && ngControl.control?.errors?.required"
+  >
+    {{ label }} is required
+  </small>
+</div>
