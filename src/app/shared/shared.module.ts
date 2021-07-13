@@ -5,6 +5,9 @@ import { NgPrimeModule } from '../ng-prime/ng-prime.module';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { MainToolbarComponent } from './main-toolbar/main-toolbar.component';
 import { ImagePipe } from '../_pipes/image.pipe';
+import { TextInputComponent } from './text-input/text-input.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CalendarModule } from 'primeng/calendar';
 
 @NgModule({
   declarations: [
@@ -12,13 +15,16 @@ import { ImagePipe } from '../_pipes/image.pipe';
     SidebarComponent,
     MainToolbarComponent,
     ImagePipe,
+    TextInputComponent,
   ],
-  imports: [CommonModule, NgPrimeModule],
+  imports: [CommonModule, NgPrimeModule, ReactiveFormsModule, CalendarModule],
   exports: [
     MainMenuComponent,
     SidebarComponent,
     MainToolbarComponent,
     ImagePipe,
+    TextInputComponent,
+    ReactiveFormsModule,
   ],
 })
 export class SharedModule {}

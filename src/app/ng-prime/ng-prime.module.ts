@@ -12,6 +12,7 @@ import { GalleriaModule } from 'primeng/galleria';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { FileUploadModule } from 'primeng/fileupload';
 import { AvatarModule } from 'primeng/avatar';
+import { RadioButtonModule } from 'primeng/radiobutton';
 
 @NgModule({
   exports: [
@@ -28,6 +29,7 @@ import { AvatarModule } from 'primeng/avatar';
     InputTextareaModule,
     FileUploadModule,
     AvatarModule,
+    RadioButtonModule,
   ],
 })
 export class NgPrimeModule {}

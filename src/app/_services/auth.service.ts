@@ -30,8 +30,10 @@ export class AuthService {
   }
 
   setCurrentUser(user: IUser) {
-    localStorage.setItem('datApp_user', JSON.stringify(user));
-    this._currentUserSource.next(user);
+    if (user !== undefined) {
+      localStorage.setItem('datApp_user', JSON.stringify(user));
+      this._currentUserSource.next(user);
+    }
   }
 
   logout() {

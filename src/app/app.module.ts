@@ -4,6 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 import { AppComponent } from './app.component';
 import { MessageService } from 'primeng/api';
@@ -12,7 +13,6 @@ import { TestErrorComponent } from './test-error/test-error.component';
 import { ErrorInterceptor } from './_interceptors/error.interceptor';
 import { ErrorServerComponent } from './error-server/error-server.component';
 import { JwtInterceptor } from './_interceptors/jwt.interceptor';
-import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoadingInterceptor } from './_interceptors/loading.interceptor';
 
 @NgModule({

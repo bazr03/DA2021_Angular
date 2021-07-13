@@ -1,0 +1,35 @@
+<div class="p-field">
+  <div class="p-inputgroup">
+    <span class="p-inputgroup-addon"><i class="pi {{ icon }}"></i></span>
+    <input
+      [type]="type"
+      pInputText
+      placeholder="{{ label }}"
+      [formControl]="$any(ngControl.control)"
+      aria-describedby="username-help"
+      [class.ng-dirty]="ngControl.touched && ngControl.invalid"
+    />
+  </div>
+  <small
+    class="p-error"
+    *ngIf="ngControl.touched && ngControl.control?.errors?.required"
+    >Please enter a {{ label }}
+  </small>
+  <small
+    class="p-error"
+    *ngIf="ngControl.touched && ngControl.control?.errors?.minlength"
+    >{{ label }} must be at least
+    {{ ngControl.control?.errors?.minlength["requiredLength"] }}
+  </small>
+  <small
+    class="p-error"
+    *ngIf="ngControl.touched && ngControl.control?.errors?.maxlength"
+    >{{ label }} must be at most
+    {{ ngControl.control?.errors?.maxlength["requiredLength"] }}
+  </small>
+  <small
+    class="p-error"
+    *ngIf="ngControl.touched && ngControl.control?.errors?.isMatching"
+    >Paswwords do not match
+  </small>
+</div>
