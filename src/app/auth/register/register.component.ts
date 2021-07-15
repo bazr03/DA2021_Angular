@@ -10,6 +10,8 @@ import {
   Validators,
 } from '@angular/forms';
 // import * as moment from 'moment';
+import { ControlValueAccessor } from '@angular/forms';
+import { Router } from '@angular/router';
 
 // TODO: Revisar Calendar de PrimeNg
 
@@ -38,14 +40,15 @@ import {
 })
 export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;
-  es: any;
-  birthDate!: Date;
   maxDate!: Date;
   yearRange: string = '';
+  validationErrors: string[] = [];
 
-  constructor(private authService: AuthService, private fb: FormBuilder) {
-    this.birthDate = new Date();
-  }
+  constructor(
+    private authService: AuthService,
+    private fb: FormBuilder,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.initializeForm();
@@ -85,6 +88,27 @@ export class RegisterComponent implements OnInit {
   }
 
   onSumbit() {
-    console.log(this.registerForm.value);
+    // console.log(this.registerForm.value);
+    const register: IRegister = {
+      username: this.registerForm.get('username')?.value || '',
+      password: this.registerForm.get('password')?.value || '',
+      gender: this.registerForm.get('gender')?.value || '',
+      knownAs: this.registerForm.get('knownAs')?.value || '',
+      dateOfBirth: this.registerForm.get('dateOfBirth')?.value || '',
+      city: this.registerForm.get('city')?.value || '',
+      country: this.registerForm.get('country')?.value || '',
+    };
+
+    // console.log(register);
+
+    this.authService.register(register).subscribe(
+      (res) => {
+        this.registerForm.reset();
+        this.router.navigateByUrl('/members');
+      },
+      (errors) => {
+        this.validationErrors = errors;
+      }
+    );
   }
 }

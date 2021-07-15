@@ -5,6 +5,9 @@ import { MessageService } from 'primeng/api';
 import { FileUploadService } from '../../_services/file-upload.service';
 import { IPhoto } from '../interfaces/IPhoto';
 import { UsersService } from '../../_services/users.service';
+import { AuthService } from '../../_services/auth.service';
+import { IUser } from 'src/app/_interfaces/IUser';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-photo-editor',
@@ -20,7 +23,8 @@ export class PhotoEditorComponent implements OnInit {
   constructor(
     private messageService: MessageService,
     private fileUploadService: FileUploadService,
-    private usersService: UsersService
+    private usersService: UsersService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {}
@@ -38,6 +42,9 @@ export class PhotoEditorComponent implements OnInit {
       .uploadFiles(this.uploadedFiles)
       .subscribe((photos) => {
         photos.forEach((photo) => {
+          if (photo.isMain) {
+            this.updateMainPhoto(photo.url);
+          }
           this.member.photos.push(photo);
         });
 
@@ -47,13 +54,24 @@ export class PhotoEditorComponent implements OnInit {
           summary: 'Success',
           detail: 'Images uploaded succesfully!',
         });
-        this.uploadedFiles = [];
         this.clear();
       });
   }
 
   clear() {
+    this.uploadedFiles = [];
     this.fileUpload.clear();
+  }
+
+  updateMainPhoto(photoUrl: string) {
+    let currentUser!: IUser;
+    this.authService.currentUser$.pipe(take(1)).subscribe((user) => {
+      currentUser = { ...user };
+    });
+
+    currentUser.photoUrl = photoUrl;
+    this.member.photoUrl = photoUrl;
+    this.authService.setCurrentUser(currentUser);
   }
 
   setMainPhoto(photo: IPhoto) {

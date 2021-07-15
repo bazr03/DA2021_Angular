@@ -29,7 +29,6 @@ export class UsersService {
         const users = this.getUsers();
         let updatedUsers: IMember[] = [];
         if (users.length > 0) {
-          console.log('combinando users :(');
           updatedUsers = fmembers.map((fuser) => {
             const user = users.find((u) => u.id === fuser.id);
             return user ? user : fuser;
@@ -47,7 +46,6 @@ export class UsersService {
 
     return this.http.get<IMember>(url).pipe(
       tap((user) => {
-        console.log('actualizando usersss from tap');
         const updatedUsers = this.updatelocalMember(user);
         this._setUsers(updatedUsers);
       })

@@ -19,7 +19,7 @@
         <ng-template pTemplate="header">
           <img
             [alt]="member.knownAs"
-            [src]="member.photoUrl"
+            [src]="member | image"
             class="card__img"
           />
         </ng-template>

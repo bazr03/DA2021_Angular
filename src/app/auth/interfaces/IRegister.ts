@@ -1,5 +1,9 @@
-import { ILogin } from "./ILogin";
+import { ILogin } from './ILogin';
 
 export interface IRegister extends ILogin {
-  confirmPassword:string;
+  gender: string;
+  knownAs: string;
+  dateOfBirth: Date;
+  city: string;
+  country: string;
 }

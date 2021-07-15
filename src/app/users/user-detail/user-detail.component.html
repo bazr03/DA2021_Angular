@@ -7,7 +7,7 @@
       [style]="{ 'max-width': '20rem' }"
     >
       <ng-template pTemplate="header">
-        <img [alt]="member.knownAs" [src]="member.photoUrl" class="card__img" />
+        <img [alt]="member.knownAs" [src]="member | image" class="card__img" />
       </ng-template>
       <div>
         <strong>Location:</strong>

@@ -1,6 +1,10 @@
 <div class="p-d-flex p-flex-column p-jc-center p-ai-center register">
   <h1 class="text-layout">First step into a new adventure</h1>
-  <form [formGroup]="registerForm" (ngSubmit)="onSumbit()" autocomplete="off">
+  <form
+    [formGroup]="registerForm"
+    (ngSubmit)="registerForm.valid && onSumbit()"
+    autocomplete="off"
+  >
     <div class="p-shadow-8 box">
       <div class="p-fluid text-layout">
         <div class="p-field-radiobutton">
@@ -25,14 +29,6 @@
           [icon]="'pi-users'"
         >
         </app-text-input>
-
-        <!-- <app-text-input
-          [formControl]="$any(registerForm.controls['dateOfBirth'])"
-          [label]="'Date of Birth'"
-          [icon]="'pi-calendar-plus'"
-          [type]="'date'"
-        >
-        </app-text-input> -->
 
         <app-date-input
           [formControl]="$any(registerForm.controls['dateOfBirth'])"
@@ -70,7 +66,20 @@
         >
         </app-text-input>
       </div>
-      <button pButton type="submit" label="Submit" class="p-mt-3"></button>
+      <div *ngIf="validationErrors.length > 0">
+        <ul class="p-error">
+          <li *ngFor="let error of validationErrors">
+            {{ error }}
+          </li>
+        </ul>
+      </div>
+      <button
+        pButton
+        type="submit"
+        label="Register"
+        [disabled]="!registerForm.valid"
+        class="p-mt-3"
+      ></button>
 
       <p class="login__redirect">
         You already have an acount, go to
@@ -78,6 +87,6 @@
       </p>
     </div>
   </form>
-  <p class="text-layout">Form value: {{ registerForm.value | json }}</p>
-  <p class="text-layout">Form value: {{ registerForm.status | json }}</p>
+  <!-- <p class="text-layout">Form value: {{ registerForm.value | json }}</p>
+  <p class="text-layout">Form value: {{ registerForm.status | json }}</p> -->
 </div>

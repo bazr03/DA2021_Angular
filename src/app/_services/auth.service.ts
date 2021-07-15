@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { ILogin } from '../auth/interfaces/ILogin';
 import { IUser } from '../_interfaces/IUser';
+import { IRegister } from '../auth/interfaces/IRegister';
 
 @Injectable({
   providedIn: 'root',
@@ -33,6 +34,8 @@ export class AuthService {
     if (user !== undefined) {
       localStorage.setItem('datApp_user', JSON.stringify(user));
       this._currentUserSource.next(user);
+    } else {
+      this._currentUserSource.next(undefined);
     }
   }
 
@@ -42,7 +45,7 @@ export class AuthService {
     this.router.navigateByUrl('/');
   }
 
-  register(model: ILogin) {
+  register(model: IRegister) {
     const url = `${this._baseUrl}/account/register`;
 
     return this.http.post<IUser>(url, model).pipe(

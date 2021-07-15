@@ -10,13 +10,14 @@ import { IMember } from '../interfaces/IMember';
 @Component({
   selector: 'app-user-edit',
   templateUrl: './user-edit.component.html',
-  styles: [
-  ]
+  styles: [],
 })
 export class UserEditComponent implements OnInit {
-  @ViewChild('editForm') editForm!:NgForm;
-  @HostListener('window:beforeunload', ['$event']) unloadNotification($event:any){
-    if(this.editForm.dirty){
+  @ViewChild('editForm') editForm!: NgForm;
+  @HostListener('window:beforeunload', ['$event']) unloadNotification(
+    $event: any
+  ) {
+    if (this.editForm.dirty) {
       $event.returnValue = true;
     }
   }
@@ -31,30 +32,30 @@ export class UserEditComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.member$ = this.authService.currentUser$
-                      .pipe(
-                        switchMap(user => this.usersService.fetchUser(user.username)),
-                        tap( member => {
-                          this.member = member;
-                        })
-                      );
+    this.member$ = this.authService.currentUser$.pipe(
+      switchMap((user) => this.usersService.fetchUser(user.username)),
+      tap((member) => {
+        this.member = member;
+      })
+    );
   }
 
-  updateMember(){
-    this.isLoading = true;
-    this.usersService.updateMember(this.member)
-      .subscribe(() => {
+  updateMember() {
+    this.usersService.updateMember(this.member).subscribe(
+      () => {
         this.messageService.add({
           key: 'tr',
-          severity:'success',
-          summary:`Updated Completed`,
-          detail:`Profile update successfully`});
+          severity: 'success',
+          summary: `Updated Completed`,
+          detail: `Profile update successfully`,
+        });
 
         this.editForm.reset(this.member);
         this.isLoading = false;
-      }, err => {
+      },
+      (err) => {
         this.isLoading = false;
-      });
+      }
+    );
   }
-
 }

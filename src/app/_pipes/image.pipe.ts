@@ -7,7 +7,6 @@ import { IUser } from '../_interfaces/IUser';
 })
 export class ImagePipe implements PipeTransform {
   transform(member: IMember | IUser): string {
-    const photoUrl = member.photoUrl ? member.photoUrl : './assets/user.png';
-    return photoUrl;
+    return member.photoUrl ? member.photoUrl : './assets/user.png';
   }
 }
