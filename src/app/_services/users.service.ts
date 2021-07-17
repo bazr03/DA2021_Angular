@@ -1,12 +1,14 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 import { map, tap, take } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { IMember } from '../users/interfaces/IMember';
 import { AuthService } from './auth.service';
 import { IPhoto } from '../users/interfaces/IPhoto';
 import { IUser } from '../_interfaces/IUser';
+import { PaginatedResult } from '../users/interfaces/IPagination';
+import { UserParams } from '../_helpers/userParams';
 
 @Injectable({
   providedIn: 'root',
@@ -16,10 +18,32 @@ export class UsersService {
   private readonly _membersSource$ = new BehaviorSubject<IMember[]>([]);
   public readonly members$ = this._membersSource$.asObservable();
 
-  constructor(private http: HttpClient, private authService: AuthService) {}
+  private memberCache = new Map();
+  user!: IUser;
+  userParams!: UserParams;
+
+  constructor(private http: HttpClient, private authService: AuthService) {
+    this.authService.currentUser$.pipe(take(1)).subscribe((user) => {
+      this.user = user;
+      this.userParams = new UserParams(user);
+    });
+  }
 
   private _setUsers(users: IMember[]) {
     this._membersSource$.next(users);
+  }
+
+  getUserParams() {
+    return this.userParams;
+  }
+
+  setUserParams(params: UserParams) {
+    this.userParams = params;
+  }
+
+  resetUserParams() {
+    this.userParams = new UserParams(this.user);
+    return this.userParams;
   }
 
   fetchUsers() {
@@ -41,6 +65,31 @@ export class UsersService {
     );
   }
 
+  fetchUsers2(userParams: UserParams) {
+    const key = Object.values(userParams).join('-');
+    const response = this.memberCache.get(key);
+
+    if (response) {
+      return of(response);
+    }
+    const url = `${this.baseUrl}/users`;
+    let params = this.getPaginationHeaders(
+      userParams.pageNumber,
+      userParams.pageSize
+    );
+    params = params.append('minAge', userParams.minAge.toString());
+    params = params.append('maxAge', userParams.maxAge.toString());
+    params = params.append('gender', userParams.gender);
+    params = params.append('orderBy', userParams.orderBy);
+
+    return this.getPaginatedResult<IMember[]>(url, params).pipe(
+      map((res) => {
+        this.memberCache.set(key, res);
+        return res;
+      })
+    );
+  }
+
   fetchUser(username: string) {
     const url = `${this.baseUrl}/users/${username}`;
 
@@ -57,6 +106,19 @@ export class UsersService {
     return users.find((u) => u.username == username);
 
     // return this.fetchUser(username);
+  }
+
+  getMember(username: string) {
+    const url = `${this.baseUrl}/users/${username}`;
+    const member = [...this.memberCache.values()]
+      .reduce((arr, elem) => arr.concat(elem.result), [])
+      .find((member: IMember) => member.username === username);
+    if (member) {
+      console.log('Usuario YA EN MEMORIA');
+      return of(member);
+    }
+    console.log('Usuario NO EN MEMORIA, FETCHING');
+    return this.http.get<IMember>(url);
   }
 
   // Get last value without subscribing to the users$ observable (syncronously)
@@ -101,5 +163,32 @@ export class UsersService {
       return user.id === member.id ? member : user;
     });
     return updatedUsers;
+  }
+  private getPaginatedResult<T>(url: string, params: HttpParams) {
+    const paginatedResult: PaginatedResult<T> = new PaginatedResult<T>();
+
+    // al usar la opcion observe:'response', angular retonrna toda la respuesta (full)
+    // no extrae solo el body como lo hace por default, asi podremos ver los headers
+    return this.http.get<T>(url, { observe: 'response', params }).pipe(
+      map((res) => {
+        const response = res.body;
+        if (response) {
+          paginatedResult.result = response;
+        }
+        const pagination = res.headers.get('Pagination');
+        if (pagination) {
+          paginatedResult.pagination = JSON.parse(pagination);
+        }
+        // this._membersSource$.next(users);
+        return paginatedResult;
+      })
+    );
+  }
+
+  private getPaginationHeaders(pageNumber: number, pageSize: number) {
+    let params = new HttpParams();
+    params = params.append('pageNumber', pageNumber.toString());
+    params = params.append('pageSize', pageSize.toString());
+    return params;
   }
 }

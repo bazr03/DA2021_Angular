@@ -1,16 +1,23 @@
-<p-card [header]="member.knownAs" [subheader]="member.city"  styleClass="p-card-shadow ">
+<p-card
+  header="{{ member.knownAs }}, {{ member.age }}"
+  [subheader]="member.city"
+  styleClass="p-card-shadow "
+>
   <ng-template pTemplate="header">
-      <img [alt]="member.knownAs" [src]="member | image" class="card__img" >
+    <img [alt]="member.knownAs" [src]="member | image" class="card__img" />
   </ng-template>
-  <ng-template pTemplate="footer" >
-    <div class="card_footer" >
-      <p-button
-        icon="pi pi-user"
-        [routerLink]="['/members', member.username]" >
+  <ng-template pTemplate="footer">
+    <div class="card_footer">
+      <p-button icon="pi pi-user" [routerLink]="['/members', member.username]">
       </p-button>
-      <p-button icon="pi pi-heart" styleClass="p-button-danger p-mt-1"></p-button>
-      <p-button icon="pi pi-envelope" styleClass="p-button-info p-mt-1"></p-button>
-
+      <p-button
+        icon="pi pi-heart"
+        styleClass="p-button-danger p-mt-1"
+      ></p-button>
+      <p-button
+        icon="pi pi-envelope"
+        styleClass="p-button-info p-mt-1"
+      ></p-button>
     </div>
   </ng-template>
 </p-card>

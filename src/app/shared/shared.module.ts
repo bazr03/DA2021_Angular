@@ -9,6 +9,7 @@ import { TextInputComponent } from './text-input/text-input.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
 import { DateInputComponent } from './date-input/date-input.component';
+import { TimeagoModule } from 'ngx-timeago';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,13 @@ import { DateInputComponent } from './date-input/date-input.component';
     TextInputComponent,
     DateInputComponent,
   ],
-  imports: [CommonModule, NgPrimeModule, ReactiveFormsModule, CalendarModule],
+  imports: [
+    CommonModule,
+    NgPrimeModule,
+    ReactiveFormsModule,
+    CalendarModule,
+    TimeagoModule.forRoot(),
+  ],
   exports: [
     MainMenuComponent,
     SidebarComponent,
@@ -28,6 +35,7 @@ import { DateInputComponent } from './date-input/date-input.component';
     TextInputComponent,
     ReactiveFormsModule,
     DateInputComponent,
+    TimeagoModule,
   ],
 })
 export class SharedModule {}

@@ -13,6 +13,10 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { FileUploadModule } from 'primeng/fileupload';
 import { AvatarModule } from 'primeng/avatar';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { PaginatorModule } from 'primeng/paginator';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { DropdownModule } from 'primeng/dropdown';
+import { SelectButtonModule } from 'primeng/selectbutton';
 
 @NgModule({
   exports: [
@@ -30,6 +34,10 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     FileUploadModule,
     AvatarModule,
     RadioButtonModule,
+    PaginatorModule,
+    InputNumberModule,
+    DropdownModule,
+    SelectButtonModule,
   ],
 })
 export class NgPrimeModule {}

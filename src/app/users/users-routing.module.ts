@@ -7,36 +7,31 @@ import { UserResolver } from './user.resolver';
 import { UsersListComponent } from './users-list/users-list.component';
 import { UsersResolver } from './users.resolver';
 
-const routes:Routes = [
+const routes: Routes = [
   {
     path: '',
-    component:UsersListComponent,
-    resolve: {members:UsersResolver}
+    component: UsersListComponent,
+    // resolve: {members:UsersResolver}
   },
   {
-    path:'edit',
+    path: 'edit',
     component: UserEditComponent,
-    canDeactivate: [PreventUnsavedChangesGuard]
+    canDeactivate: [PreventUnsavedChangesGuard],
   },
   {
-    path:':username',
-    component:UserDetailComponent,
-    resolve: {member:UserResolver}
+    path: ':username',
+    component: UserDetailComponent,
+    resolve: { member: UserResolver },
   },
   {
-    path:'**',
-    redirectTo:'404'
-  }
+    path: '**',
+    redirectTo: '404',
+  },
 ];
-
 
 @NgModule({
   declarations: [],
-  imports: [
-    RouterModule.forChild(routes)
-  ],
-  exports: [
-    RouterModule
-  ]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule],
 })
-export class UsersRoutingModule { }
+export class UsersRoutingModule {}

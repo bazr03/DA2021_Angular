@@ -1,4 +1,4 @@
-<h1 class="text-layout" >Users List </h1>
+<!-- <h1 class="text-layout" >Users List </h1>
 <div class="p-grid" >
   <ng-container *ngIf="users$ | async as users; else loading" >
     <div class="p-col-6 p-md-3 p-lg-2" *ngFor="let user of users" >
@@ -8,4 +8,95 @@
   <ng-template #loading >
     <h2 class="text-layout">Loading...</h2>
   </ng-template>
+</div> -->
+
+<div class="p-grid p-fluid p-mt-3 p-jc-center">
+  <div class="p-col-12">
+    <h1 class="text-layout">
+      Your matches - {{ pagination?.totalItems }} found
+    </h1>
+  </div>
+</div>
+
+<form #form="ngForm" (ngSubmit)="loadMembers()" autocomplete="off">
+  <div class="p-fluid p-formgrid p-grid">
+    <div class="p-field p-col">
+      <label for="horizontalMinAge" class="text-layout">Age from: </label>
+      <p-inputNumber
+        [(ngModel)]="userParams.minAge"
+        name="minAge"
+        [showButtons]="true"
+        inputId="horizontalMinAge"
+        [step]="1"
+        [min]="18"
+      >
+      </p-inputNumber>
+    </div>
+    <div class="p-field p-col">
+      <label for="horizontalMaxAge" class="text-layout">Age to: </label>
+      <p-inputNumber
+        [(ngModel)]="userParams.maxAge"
+        name="maxAge"
+        [showButtons]="true"
+        inputId="horizontalMaxAge"
+        [step]="1"
+        [max]="99"
+      >
+      </p-inputNumber>
+    </div>
+    <div class="p-field p-col">
+      <label for="gender" class="text-layout">Show:</label>
+      <p-dropdown
+        [options]="genderList"
+        [(ngModel)]="userParams.gender"
+        name="gender"
+        optionLabel="display"
+        optionValue="value"
+        id="gender"
+      ></p-dropdown>
+    </div>
+  </div>
+
+  <div class="p-d-flex p-jc-center p-ai-center">
+    <button
+      pButton
+      pRipple
+      type="submit"
+      label="Apply Filters"
+      color="primary"
+      class="p-mr-3"
+    ></button>
+    <button
+      pButton
+      pRipple
+      type="button"
+      label="Reset Filters"
+      class="p-button-info p-mr-5"
+      (click)="resetFilters()"
+    ></button>
+    <p-selectButton
+      [options]="userActivity"
+      (onOptionClick)="loadMembers()"
+      name="orderBy"
+      [(ngModel)]="userParams.orderBy"
+      optionLabel="display"
+      optionValue="value"
+    >
+    </p-selectButton>
+  </div>
+</form>
+
+<div class="p-grid p-fluid p-mt-5 p-jc-center">
+  <ng-container *ngIf="members.length > 0">
+    <div class="p-col-5 p-md-3 p-lg-2" *ngFor="let member of members">
+      <app-user-card [member]="member"></app-user-card>
+    </div>
+  </ng-container>
+  <div class="p-col-12 p-d-flex p-jc-center" *ngIf="pagination">
+    <p-paginator
+      [rows]="pagination.itemsPerPage"
+      [totalRecords]="pagination.totalItems"
+      (onPageChange)="onPageChange($event)"
+    ></p-paginator>
+  </div>
 </div>
