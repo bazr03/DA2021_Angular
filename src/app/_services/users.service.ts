@@ -46,6 +46,21 @@ export class UsersService {
     return this.userParams;
   }
 
+  addLike(username: string) {
+    const url = `${this.baseUrl}/likes/${username}`;
+
+    return this.http.post(url, {});
+  }
+
+  getLikes(predicate: string, pageNumber: number, pageSize: number) {
+    let params = this.getPaginationHeaders(pageNumber, pageSize);
+    params = params.append('predicate', predicate);
+    // const url = `${this.baseUrl}/likes?predicate=${predicate}`;
+    const url = `${this.baseUrl}/likes`;
+    // return this.http.get<Partial<IMember[]>>(url);
+    return this.getPaginatedResult<Partial<IMember[]>>(url, params);
+  }
+
   fetchUsers() {
     const url = `${this.baseUrl}/users`;
     return this.http.get<IMember[]>(url).pipe(

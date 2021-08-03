@@ -1,12 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { UsersService } from 'src/app/_services/users.service';
 import { IMember } from '../interfaces/IMember';
 import { IPagination } from '../interfaces/IPagination';
 import { UserParams } from '../../_helpers/userParams';
-import { AuthService } from '../../_services/auth.service';
 import { IUser } from '../../_interfaces/IUser';
-import { take } from 'rxjs/operators';
 
 interface IDisplay {
   value: string;

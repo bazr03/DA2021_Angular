@@ -29,5 +29,6 @@ import { SharedModule } from '../shared/shared.module';
     FormsModule,
     SharedModule,
   ],
+  exports: [UserCardComponent],
 })
 export class UsersModule {}
