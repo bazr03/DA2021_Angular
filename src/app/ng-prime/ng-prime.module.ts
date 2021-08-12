@@ -17,6 +17,8 @@ import { PaginatorModule } from 'primeng/paginator';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DropdownModule } from 'primeng/dropdown';
 import { SelectButtonModule } from 'primeng/selectbutton';
+import { TableModule } from 'primeng/table';
+import { DividerModule } from 'primeng/divider';
 
 @NgModule({
   exports: [
@@ -38,6 +40,8 @@ import { SelectButtonModule } from 'primeng/selectbutton';
     InputNumberModule,
     DropdownModule,
     SelectButtonModule,
+    TableModule,
+    DividerModule,
   ],
 })
 export class NgPrimeModule {}

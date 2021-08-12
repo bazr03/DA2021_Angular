@@ -9,6 +9,10 @@ import { IPhoto } from '../users/interfaces/IPhoto';
 import { IUser } from '../_interfaces/IUser';
 import { PaginatedResult } from '../users/interfaces/IPagination';
 import { UserParams } from '../_helpers/userParams';
+import {
+  getPaginatedResult,
+  getPaginationHeaders,
+} from '../_helpers/paginationHelper';
 
 @Injectable({
   providedIn: 'root',
@@ -53,12 +57,12 @@ export class UsersService {
   }
 
   getLikes(predicate: string, pageNumber: number, pageSize: number) {
-    let params = this.getPaginationHeaders(pageNumber, pageSize);
+    let params = getPaginationHeaders(pageNumber, pageSize);
     params = params.append('predicate', predicate);
     // const url = `${this.baseUrl}/likes?predicate=${predicate}`;
     const url = `${this.baseUrl}/likes`;
     // return this.http.get<Partial<IMember[]>>(url);
-    return this.getPaginatedResult<Partial<IMember[]>>(url, params);
+    return getPaginatedResult<Partial<IMember[]>>(url, params, this.http);
   }
 
   fetchUsers() {
@@ -88,7 +92,7 @@ export class UsersService {
       return of(response);
     }
     const url = `${this.baseUrl}/users`;
-    let params = this.getPaginationHeaders(
+    let params = getPaginationHeaders(
       userParams.pageNumber,
       userParams.pageSize
     );
@@ -97,7 +101,7 @@ export class UsersService {
     params = params.append('gender', userParams.gender);
     params = params.append('orderBy', userParams.orderBy);
 
-    return this.getPaginatedResult<IMember[]>(url, params).pipe(
+    return getPaginatedResult<IMember[]>(url, params, this.http).pipe(
       map((res) => {
         this.memberCache.set(key, res);
         return res;
@@ -178,32 +182,5 @@ export class UsersService {
       return user.id === member.id ? member : user;
     });
     return updatedUsers;
-  }
-  private getPaginatedResult<T>(url: string, params: HttpParams) {
-    const paginatedResult: PaginatedResult<T> = new PaginatedResult<T>();
-
-    // al usar la opcion observe:'response', angular retonrna toda la respuesta (full)
-    // no extrae solo el body como lo hace por default, asi podremos ver los headers
-    return this.http.get<T>(url, { observe: 'response', params }).pipe(
-      map((res) => {
-        const response = res.body;
-        if (response) {
-          paginatedResult.result = response;
-        }
-        const pagination = res.headers.get('Pagination');
-        if (pagination) {
-          paginatedResult.pagination = JSON.parse(pagination);
-        }
-        // this._membersSource$.next(users);
-        return paginatedResult;
-      })
-    );
-  }
-
-  private getPaginationHeaders(pageNumber: number, pageSize: number) {
-    let params = new HttpParams();
-    params = params.append('pageNumber', pageNumber.toString());
-    params = params.append('pageSize', pageSize.toString());
-    return params;
   }
 }

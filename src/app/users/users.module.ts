@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { PhotoEditorComponent } from './photo-editor/photo-editor.component';
 import { ImgGalleryComponent } from './components/img-gallery/img-gallery.component';
 import { SharedModule } from '../shared/shared.module';
+import { UserMessagesComponent } from './components/user-messages/user-messages.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { SharedModule } from '../shared/shared.module';
     UserEditComponent,
     PhotoEditorComponent,
     ImgGalleryComponent,
+    UserMessagesComponent,
   ],
   imports: [
     CommonModule,

@@ -1,1 +1,90 @@
-<p>messages-home-page works!</p>
+<div class="p-grid p-mt-5 p-jc-center">
+  <div class="p-col-12 p-d-flex p-jc-center">
+    <p-selectButton
+      [options]="messageOptions"
+      (onChange)="loadMessages()"
+      name="container"
+      [(ngModel)]="container"
+      optionValue="value"
+      optionLabel="display"
+    >
+    </p-selectButton>
+  </div>
+
+  <div class="p-col-12 p-d-flex p-jc-center" *ngIf="messages?.length === 0">
+    <h3>No messages</h3>
+  </div>
+  <div class="p-col-12 p-d-flex p-jc-center" *ngIf="messages?.length !== 0">
+    <p-table [value]="messages" styleClass="p-datatable-striped">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Message</th>
+          <th>From / To</th>
+          <th>Sent / Received</th>
+          <th>Delete</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-message>
+        <tr
+          routerLink="{{
+            container === 'Outbox'
+              ? '/members/' + message.recipientUsername
+              : '/members/' + message.senderUsername
+          }}"
+          [queryParams]="{ tab: 'messages' }"
+          style="cursor: pointer"
+          [hidden]="loading"
+        >
+          <td>
+            {{ message.content }}
+          </td>
+          <td>
+            <div *ngIf="container === 'Outbox'">
+              <p-avatar
+                image="{{ message.recipientPhotoUrl || './assets/user.png' }}"
+                styleClass="p-mr-2"
+                size="large"
+                shape="circle"
+              ></p-avatar>
+              <strong>{{ message.recipientUsername | titlecase }}</strong>
+            </div>
+            <div *ngIf="container !== 'Outbox'">
+              <p-avatar
+                image="{{ message.senderPhotoUrl || './assets/user.png' }}"
+                styleClass="p-mr-2"
+                size="large"
+                shape="circle"
+              ></p-avatar>
+              <strong>{{ message.senderUsername | titlecase }}</strong>
+            </div>
+          </td>
+          <td>
+            {{ message.messageSent | timeago }}
+          </td>
+          <td>
+            <button
+              pButton
+              pRipple
+              type="button"
+              icon="pi pi-times"
+              class="p-button-rounded p-button-danger p-button-text"
+              (click)="$event.stopPropagation()"
+              (click)="deleteMessage(message.id)"
+            ></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  <div class="p-col-12 p-d-flex p-jc-center" *ngIf="showPagination()">
+    <p-paginator
+      [rows]="pagination.itemsPerPage"
+      [totalRecords]="pagination.totalItems"
+      (onPageChange)="onPageChange($event)"
+    ></p-paginator>
+  </div>
+</div>
+
+<!-- <ng-template let-item>
+  <i [class]="item.icon"></i> {{ item.value }}
+</ng-template> -->

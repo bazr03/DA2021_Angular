@@ -18,6 +18,8 @@
       <p-button
         icon="pi pi-envelope"
         styleClass="p-button-info p-mt-1"
+        [routerLink]="['/members', member.username]"
+        [queryParams]="{ tab: 'messages' }"
       ></p-button>
     </div>
   </ng-template>

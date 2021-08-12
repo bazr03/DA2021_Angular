@@ -1,0 +1,71 @@
+<div class="card">
+  <div *ngIf="messages?.length === 0" class="text-error">
+    No messages yet... say hi by using the message box below
+  </div>
+  <div *ngFor="let message of messages">
+    <p-divider [align]="setAlign(message.senderUsername)">
+      <div class="p-d-inline-flex p-ai-center">
+        <p-avatar
+          image="{{ message.senderPhotoUrl || './assets/user.png' }}"
+          styleClass="p-mr-2"
+          shape="circle"
+        >
+        </p-avatar>
+        <small>
+          <i class="pi pi-clock" style="font-size: 1rem"></i>
+          <span class="p-mx-2">{{ message.messageSent | timeago }}</span>
+        </small>
+        <small>
+          <span
+            class="text-warn p-mr-2"
+            *ngIf="!message.dateRead && message.senderUsername !== username"
+          >
+            (unread)
+          </span>
+        </small>
+        <small>
+          <span *ngIf="message.dateRead && message.senderUsername !== username">
+            (read {{ message.dateRead | timeago }})
+          </span>
+        </small>
+      </div>
+    </p-divider>
+    <div
+      [ngClass]="{
+        'p-d-flex p-jc-start': message.senderUsername === username,
+        'p-d-flex p-jc-end': message.senderUsername !== username
+      }"
+    >
+      <p class="text-warn">{{ message.content }}</p>
+    </div>
+  </div>
+
+  <form
+    class="p-mt-5"
+    #messageForm="ngForm"
+    (ngSubmit)="sendMessage()"
+    autocomplete="off"
+  >
+    <div class="p-grid p-fluid">
+      <div class="p-col-12">
+        <div class="p-inputgroup">
+          <button
+            type="submit"
+            pButton
+            pRipple
+            label="Send"
+            [disabled]="!messageForm.valid"
+          ></button>
+          <input
+            type="text"
+            pInputText
+            placeholder="Send a private message"
+            name="messageContent"
+            required
+            [(ngModel)]="messageContent"
+          />
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

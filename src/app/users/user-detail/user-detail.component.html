@@ -1,8 +1,7 @@
-<div class="p-grid p-mt-5">
-  <div class="p-col-12 p-md-4">
+<div class="p-grid p-mt-5 p-jc-center">
+  <div class="p-col-12 p-md-4 p-d-flex p-jc-center">
     <p-card
       [header]="member.knownAs"
-      [subheader]="member.city"
       styleClass="p-card-shadow"
       [style]="{ 'max-width': '20rem' }"
     >
@@ -11,19 +10,19 @@
       </ng-template>
       <div>
         <strong>Location:</strong>
-        <p>{{ member.city }}, {{ member.country }}</p>
+        <span class="p-ml-1">{{ member.city }}, {{ member.country }}</span>
       </div>
-      <div>
+      <div class="p-mt-1">
         <strong>Age:</strong>
-        <p>{{ member.age }}</p>
+        <span class="p-ml-1">{{ member.age }}</span>
       </div>
-      <div>
+      <div class="p-mt-1">
         <strong>Member since:</strong>
-        <p>{{ member.created | date: "longDate" }}</p>
+        <span class="p-ml-1">{{ member.created | date: "longDate" }}</span>
       </div>
-      <div>
+      <div class="p-mt-1">
         <strong>Last active:</strong>
-        <p>{{ member.lastActive | timeago }}</p>
+        <span class="p-ml-1">{{ member.lastActive | timeago }}</span>
       </div>
       <ng-template pTemplate="footer">
         <div class="card_footer">
@@ -36,44 +35,33 @@
             icon="pi pi-envelope"
             label="Message"
             styleClass="p-button-info p-mt-1"
+            (onClick)="activeIndex = 3"
           ></p-button>
         </div>
       </ng-template>
     </p-card>
   </div>
   <div class="p-col-12 p-md-6">
-    <p-tabView>
-      <p-tabPanel>
-        <ng-template pTemplate="header">
-          <i class="pi pi-calendar p-mr-2"></i>
-          <span>About {{ member.knownAs }} </span>
-        </ng-template>
+    <p-tabView [(activeIndex)]="activeIndex">
+      <p-tabPanel header="About {{ member.knownAs }}">
         <h4>Description</h4>
         <p>{{ member.introduction }}</p>
         <h4>Looking for:</h4>
         <p>{{ member.lookingFor }}</p>
       </p-tabPanel>
-      <p-tabPanel>
-        <ng-template pTemplate="header">
-          <i class="pi pi-user p-mr-2"></i>
-          <span>Interests</span>
-        </ng-template>
+      <p-tabPanel header="Interests">
         <h4>Interests</h4>
         <p>{{ member.interests }}</p>
       </p-tabPanel>
-      <p-tabPanel>
-        <ng-template pTemplate="header">
-          <i class="pi pi-user p-mr-2"></i>
-          <span>Messages</span>
+      <p-tabPanel header="Photos">
+        <ng-template pTemplate="content">
+          <app-img-gallery [images]="images"></app-img-gallery>
         </ng-template>
-        <h4>Messages will go here!</h4>
       </p-tabPanel>
-      <p-tabPanel>
-        <ng-template pTemplate="header">
-          <i class="pi pi-user p-mr-2"></i>
-          <span>Photos</span>
+      <p-tabPanel header="Messages">
+        <ng-template pTemplate="content">
+          <app-user-messages [username]="member.username"></app-user-messages>
         </ng-template>
-        <app-img-gallery [images]="images"></app-img-gallery>
       </p-tabPanel>
     </p-tabView>
   </div>

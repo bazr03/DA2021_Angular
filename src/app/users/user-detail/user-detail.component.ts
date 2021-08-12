@@ -11,6 +11,7 @@ import { IMember } from '../interfaces/IMember';
 export class UserDetailComponent implements OnInit {
   member!: IMember;
   images: IImage[] = [];
+  activeIndex: number = 0;
 
   responsiveOptions: any[] = [
     {
@@ -34,6 +35,12 @@ export class UserDetailComponent implements OnInit {
       this.member = data['member'];
       this.setImages();
     });
+
+    this.route.queryParams.subscribe((params) => {
+      if (params.tab) {
+        this.setTab(params.tab);
+      }
+    });
   }
   setImages() {
     this.member.photos.forEach((photo) => {
@@ -46,5 +53,28 @@ export class UserDetailComponent implements OnInit {
         });
       }
     });
+  }
+
+  setTab(tab: string) {
+    if (!tab) {
+      return;
+    }
+    switch (tab) {
+      case 'messages':
+        this.activeIndex = 3;
+        break;
+      case 'about':
+        this.activeIndex = 0;
+        break;
+      case 'interests':
+        this.activeIndex = 1;
+        break;
+      case 'photos':
+        this.activeIndex = 2;
+        break;
+      default:
+        this.activeIndex = 0;
+        break;
+    }
   }
 }

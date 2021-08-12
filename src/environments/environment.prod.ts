@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  baseUrl: 'https://ibazaldua.net/api'
+  baseUrl: 'https://localhost:5001/api',
 };
