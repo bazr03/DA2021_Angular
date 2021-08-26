@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ReplaySubject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { ILogin } from '../auth/interfaces/ILogin';
 import { IUser } from '../_interfaces/IUser';
@@ -32,6 +32,9 @@ export class AuthService {
 
   setCurrentUser(user: IUser) {
     if (user !== undefined) {
+      user.roles = [];
+      const roles = this.getDecodedToken(user.token).role;
+      Array.isArray(roles) ? (user.roles = roles) : user.roles.push(roles);
       localStorage.setItem('datApp_user', JSON.stringify(user));
       this._currentUserSource.next(user);
     } else {
@@ -55,5 +58,22 @@ export class AuthService {
         }
       })
     );
+  }
+
+  getDecodedToken(token: string) {
+    return JSON.parse(atob(token.split('.')[1]));
+  }
+
+  userHasRole(role: string) {
+    let userRole: boolean = false;
+    this.currentUser$.pipe(take(1)).subscribe((user) => {
+      userRole = this.userRole(user, role);
+    });
+
+    return userRole;
+  }
+
+  private userRole(user: IUser, role: string): boolean {
+    return user.roles.includes(role);
   }
 }

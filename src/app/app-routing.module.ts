@@ -4,60 +4,69 @@ import { ErrorPageComponent } from './error-page/error-page.component';
 import { ErrorServerComponent } from './error-server/error-server.component';
 import { TestErrorComponent } from './test-error/test-error.component';
 import { AuthGuard } from './_guards/auth.guard';
+import { AdminGuard } from './_guards/admin.guard';
 
 const routes: Routes = [
   {
-    path:'',
-    loadChildren: () => import('./welcome/welcome.module').then(m => m.WelcomeModule)
+    path: '',
+    loadChildren: () =>
+      import('./welcome/welcome.module').then((m) => m.WelcomeModule),
   },
   {
-    path:'auth',
-    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
+    path: 'auth',
+    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
   },
   {
     path: '',
-    runGuardsAndResolvers:'always',
+    runGuardsAndResolvers: 'always',
     canActivate: [AuthGuard],
-    children:[
+    children: [
       {
-        path:'members',
+        path: 'members',
         canActivate: [AuthGuard],
-        loadChildren: () => import('./users/users.module').then(m => m.UsersModule)
+        loadChildren: () =>
+          import('./users/users.module').then((m) => m.UsersModule),
       },
       {
-        path:'matches',
-        loadChildren: () => import('./matches/matches.module').then(m => m.MatchesModule)
+        path: 'matches',
+        loadChildren: () =>
+          import('./matches/matches.module').then((m) => m.MatchesModule),
       },
       {
-        path:'messages',
-        loadChildren: () => import('./messages/messages.module').then(m => m.MessagesModule)
+        path: 'messages',
+        loadChildren: () =>
+          import('./messages/messages.module').then((m) => m.MessagesModule),
       },
-    ]
+      {
+        path: 'admin',
+        canActivate: [AdminGuard],
+        loadChildren: () =>
+          import('./admin-panel/admin-panel.module').then(
+            (m) => m.AdminPanelModule
+          ),
+      },
+    ],
   },
   {
-    path:'errors',
-    component:TestErrorComponent
+    path: 'errors',
+    component: TestErrorComponent,
   },
   {
-    path:'404',
-    component:ErrorPageComponent
+    path: '404',
+    component: ErrorPageComponent,
   },
   {
-    path:'server-error',
-    component:ErrorServerComponent
+    path: 'server-error',
+    component: ErrorServerComponent,
   },
   {
-    path:'**',
-    redirectTo:'404'
-  }
-]
+    path: '**',
+    redirectTo: '404',
+  },
+];
 
 @NgModule({
-  imports: [
-    RouterModule.forRoot(routes)
-  ],
-  exports:[
-    RouterModule
-  ]
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

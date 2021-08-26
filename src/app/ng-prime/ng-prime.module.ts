@@ -19,6 +19,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { TableModule } from 'primeng/table';
 import { DividerModule } from 'primeng/divider';
+import { DialogModule } from 'primeng/dialog';
+import { CheckboxModule } from 'primeng/checkbox';
 
 @NgModule({
   exports: [
@@ -42,6 +44,8 @@ import { DividerModule } from 'primeng/divider';
     SelectButtonModule,
     TableModule,
     DividerModule,
+    DialogModule,
+    CheckboxModule,
   ],
 })
 export class NgPrimeModule {}

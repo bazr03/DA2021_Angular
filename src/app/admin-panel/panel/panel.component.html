@@ -1,0 +1,14 @@
+<h2 class="text-layout p-mt-5">Admin Panel</h2>
+
+<div class="p-grid p-mt-4 p-jc-center">
+  <div class="p-col-12">
+    <p-tabView>
+      <p-tabPanel header="User Management" *ngIf="isAdmin">
+        <app-user-management></app-user-management>
+      </p-tabPanel>
+      <p-tabPanel header="Photo Managemenr" *ngIf="isAdmin || isModerator">
+        <app-photo-management></app-photo-management>
+      </p-tabPanel>
+    </p-tabView>
+  </div>
+</div>

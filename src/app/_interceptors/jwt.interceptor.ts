@@ -23,6 +23,7 @@ export class JwtInterceptor implements HttpInterceptor {
       token: '',
       gender: '',
       knownAs: '',
+      roles: [],
     };
 
     this.authService.currentUser$

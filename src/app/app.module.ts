@@ -14,9 +14,10 @@ import { ErrorInterceptor } from './_interceptors/error.interceptor';
 import { ErrorServerComponent } from './error-server/error-server.component';
 import { JwtInterceptor } from './_interceptors/jwt.interceptor';
 import { LoadingInterceptor } from './_interceptors/loading.interceptor';
+import { HasRoleDirective } from './_directives/has-role.directive';
 
 @NgModule({
-  declarations: [AppComponent, TestErrorComponent, ErrorServerComponent],
+  declarations: [AppComponent, TestErrorComponent, ErrorServerComponent, HasRoleDirective],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

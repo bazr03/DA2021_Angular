@@ -46,6 +46,15 @@
         [routerLink]="['/messages']"
         routerLinkActive="active"
       ></p-button>
+      <p-button
+        *ngIf="isAdmin || isModerator"
+        label="Admin"
+        styleClass="p-button-link p-d-none p-d-md-inline-flex"
+        badge="8"
+        badgeClass="p-badge-success"
+        [routerLink]="['/admin']"
+        routerLinkActive="active"
+      ></p-button>
     </ng-container>
   </div>
 
