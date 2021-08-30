@@ -10,6 +10,7 @@ import { UsersService } from '../../_services/users.service';
 })
 export class UserCardComponent implements OnInit {
   @Input() member!: IMember;
+  @Input() _onlineUsers: string[] = [];
 
   constructor(
     private userService: UsersService,
@@ -27,5 +28,10 @@ export class UserCardComponent implements OnInit {
         detail: `You have liked ${member.knownAs}`,
       });
     });
+  }
+
+  isOnline(member: IMember) {
+    const online = this._onlineUsers.includes(member.username);
+    return this._onlineUsers.includes(member.username);
   }
 }

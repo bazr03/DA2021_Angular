@@ -8,6 +8,20 @@
       <ng-template pTemplate="header">
         <img [alt]="member.knownAs" [src]="member | image" class="card__img" />
       </ng-template>
+      <div
+        class="p-mb-2 p-d-flex p-jc-center p-ai-center"
+        *ngIf="
+          (presenceService.onlineUsers$ | async)!.includes(member.username)
+        "
+      >
+        <button
+          pButton
+          type="button"
+          icon="pi pi-user"
+          class="p-button-rounded p-button-success p-button-text is-online"
+        ></button>
+        <span class="text-warn">Online now</span>
+      </div>
       <div>
         <strong>Location:</strong>
         <span class="p-ml-1">{{ member.city }}, {{ member.country }}</span>

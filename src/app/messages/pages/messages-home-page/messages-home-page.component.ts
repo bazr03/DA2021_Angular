@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { IMessage } from '../../interfaces/IMessage';
 import { IPagination } from '../../../users/interfaces/IPagination';
 import { MessageService } from '../../../_services/message.service';
+import { AuthService } from '../../../_services/auth.service';
+import { IUser } from '../../../_interfaces/IUser';
+import { take } from 'rxjs/operators';
 
 interface IDisplay {
   value: string;
@@ -14,7 +17,7 @@ interface IDisplay {
   templateUrl: './messages-home-page.component.html',
   styles: [],
 })
-export class MessagesHomePageComponent implements OnInit {
+export class MessagesHomePageComponent implements OnInit, OnDestroy {
   messages: IMessage[] = [];
   pagination!: IPagination;
   container = 'Unread';
@@ -22,8 +25,16 @@ export class MessagesHomePageComponent implements OnInit {
   pageSize = 5;
   messageOptions!: IDisplay[];
   loading = false;
+  user!: IUser;
 
-  constructor(private messageService: MessageService) {}
+  constructor(
+    private messageService: MessageService,
+    private authService: AuthService
+  ) {
+    this.authService.currentUser$
+      .pipe(take(1))
+      .subscribe((usr) => (this.user = usr));
+  }
 
   ngOnInit(): void {
     this.messageOptions = [
@@ -33,6 +44,10 @@ export class MessagesHomePageComponent implements OnInit {
     ];
 
     this.loadMessages();
+  }
+
+  ngOnDestroy(): void {
+    this.messageService.stopHubConnection();
   }
 
   loadMessages() {

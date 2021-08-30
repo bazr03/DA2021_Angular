@@ -8,19 +8,31 @@
   </ng-template>
   <ng-template pTemplate="footer">
     <div class="card_footer">
-      <p-button icon="pi pi-user" [routerLink]="['/members', member.username]">
-      </p-button>
-      <p-button
+      <button
+        pButton
+        type="button"
+        icon="pi pi-user"
+        [routerLink]="['/members', member.username]"
+        class="p-button-rounded p-button-text p-button-plain"
+        [ngClass]="{ 'is-online p-button-success': isOnline(member) }"
+      ></button>
+      <button
+        pButton
+        type="button"
         icon="pi pi-heart"
         styleClass="p-button-danger p-mt-1"
-        (onClick)="addLike(member)"
-      ></p-button>
-      <p-button
+        (click)="addLike(member)"
+        class="p-button-rounded p-button-danger p-button-text"
+      ></button>
+      <button
+        pButton
+        type="button"
         icon="pi pi-envelope"
         styleClass="p-button-info p-mt-1"
         [routerLink]="['/members', member.username]"
         [queryParams]="{ tab: 'messages' }"
-      ></p-button>
+        class="p-button-rounded p-button-info p-button-text"
+      ></button>
     </div>
   </ng-template>
 </p-card>

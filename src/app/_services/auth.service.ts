@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
 import { ILogin } from '../auth/interfaces/ILogin';
 import { IUser } from '../_interfaces/IUser';
 import { IRegister } from '../auth/interfaces/IRegister';
+import { PresenceService } from './presence.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +17,11 @@ export class AuthService {
   private _currentUserSource = new ReplaySubject<IUser>(1);
   currentUser$ = this._currentUserSource.asObservable();
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private presenceService: PresenceService
+  ) {}
 
   login(model: ILogin) {
     const url = `${this._baseUrl}/account/login`;
@@ -25,6 +30,7 @@ export class AuthService {
         const user = res;
         if (user) {
           this.setCurrentUser(user);
+          this.presenceService.createHubConnection(user);
         }
       })
     );
@@ -46,6 +52,7 @@ export class AuthService {
     localStorage.removeItem('datApp_user');
     this._currentUserSource.next(undefined);
     this.router.navigateByUrl('/');
+    this.presenceService.stopHubConnection();
   }
 
   register(model: IRegister) {
@@ -55,6 +62,7 @@ export class AuthService {
       map((user) => {
         if (user) {
           this.setCurrentUser(user);
+          this.presenceService.createHubConnection(user);
         }
       })
     );

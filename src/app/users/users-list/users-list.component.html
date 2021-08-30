@@ -89,7 +89,10 @@
 <div class="p-grid p-fluid p-mt-5 p-jc-center">
   <ng-container *ngIf="members.length > 0">
     <div class="p-col-5 p-md-3 p-lg-2" *ngFor="let member of members">
-      <app-user-card [member]="member"></app-user-card>
+      <app-user-card
+        [member]="member"
+        [_onlineUsers]="onlineUsers"
+      ></app-user-card>
     </div>
   </ng-container>
   <div class="p-col-12 p-d-flex p-jc-center" *ngIf="pagination">

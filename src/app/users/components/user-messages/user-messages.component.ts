@@ -1,27 +1,34 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, OnDestroy } from '@angular/core';
 import { IMessage } from '../../../messages/interfaces/IMessage';
 import { MessageService } from '../../../_services/message.service';
-import { UsersService } from '../../../_services/users.service';
 import { NgForm } from '@angular/forms';
+import { AuthService } from '../../../_services/auth.service';
+import { IUser } from '../../../_interfaces/IUser';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-user-messages',
   templateUrl: './user-messages.component.html',
   styles: [],
 })
-export class UserMessagesComponent implements OnInit {
+export class UserMessagesComponent implements OnInit, OnDestroy {
   @ViewChild('messageForm') messageForm!: NgForm;
   @Input() username: string = '';
   messages: IMessage[] = [];
   messageContent: string = '';
 
   constructor(
-    private messageService: MessageService,
-    private usersService: UsersService
-  ) {}
+    public messageService: MessageService,
+    private authService: AuthService
+  ) {
+    // this.authService.currentUser$.pipe(take(1)).subscribe(usr => this.user = usr);
+  }
 
   ngOnInit(): void {
-    this.loadMessages();
+    this.authService.currentUser$.pipe(take(1)).subscribe((usr) => {
+      this.messageService.createHubConnection(usr, this.username);
+    });
+    // this.messageService.createHubConnection(this.user, this.username);
   }
 
   loadMessages() {
@@ -40,9 +47,13 @@ export class UserMessagesComponent implements OnInit {
   sendMessage() {
     this.messageService
       .sendMessage(this.username, this.messageContent)
-      .subscribe((message) => {
-        this.messages.push(message);
+      .then(() => {
         this.messageForm.reset();
       });
+  }
+
+  ngOnDestroy(): void {
+    console.log('user-messages.component DESTROY!!');
+    this.messageService.stopHubConnection();
   }
 }

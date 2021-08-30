@@ -1,8 +1,11 @@
 <div class="card">
-  <div *ngIf="messages?.length === 0" class="text-error">
+  <div
+    *ngIf="(messageService.messageThread$ | async)?.length === 0"
+    class="text-error"
+  >
     No messages yet... say hi by using the message box below
   </div>
-  <div *ngFor="let message of messages">
+  <div *ngFor="let message of messageService.messageThread$ | async">
     <p-divider [align]="setAlign(message.senderUsername)">
       <div class="p-d-inline-flex p-ai-center">
         <p-avatar

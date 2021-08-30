@@ -9,7 +9,7 @@
 <p-toolbar class="fixed">
   <div class="p-toolbar-group-left">
     <p-button
-      *ngIf="authService.currentUser$ | async"
+      *ngIf="user"
       icon="pi pi-align-justify"
       styleClass="p-button-success"
       class="p-button-outlined p-mr-4 p-d-md-none"
@@ -19,7 +19,7 @@
       <h1 class="text-layout p-mr-4 brand">DattingApp</h1>
     </a>
 
-    <ng-container *ngIf="authService.currentUser$ | async">
+    <ng-container *ngIf="user">
       <button
         pButton
         type="button"
@@ -59,7 +59,7 @@
   </div>
 
   <div class="p-toolbar-group-right">
-    <ng-container *ngIf="authService.currentUser$ | async as user">
+    <ng-container *ngIf="user">
       <p-avatar
         [image]="user | image"
         styleClass="p-mr-2"
@@ -75,7 +75,7 @@
     </ng-container>
     <button
       pButton
-      *ngIf="(authService.currentUser$ | async) === undefined"
+      *ngIf="!user"
       type="button"
       routerLink="auth/login"
       label="Login"

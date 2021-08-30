@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { IUser } from 'src/app/_interfaces/IUser';
 import { AuthService } from 'src/app/_services/auth.service';
 
@@ -19,13 +19,15 @@ import { AuthService } from 'src/app/_services/auth.service';
     `,
   ],
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent implements OnInit, OnDestroy {
   isSidebarVisible: boolean = false;
   items: MenuItem[] = [];
   isAdmin: boolean = false;
   isModerator: boolean = false;
+  user!: IUser | undefined;
+  userSubscription!: Subscription;
 
-  constructor(public authService: AuthService) {}
+  constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
     this.items = [
@@ -51,8 +53,9 @@ export class SidebarComponent implements OnInit {
       },
     ];
 
-    this.authService.currentUser$.subscribe((user) => {
+    this.userSubscription = this.authService.currentUser$.subscribe((user) => {
       if (user) {
+        this.user = user;
         this.isAdmin = this.authService.userHasRole('Admin');
         this.isModerator = this.authService.userHasRole('Moderator');
       }
@@ -64,10 +67,14 @@ export class SidebarComponent implements OnInit {
   }
 
   logout() {
+    this.user = undefined;
     this.authService.logout();
   }
 
   isAdminAndModerator() {
     return this.isAdmin && this.isModerator;
+  }
+  ngOnDestroy(): void {
+    this.userSubscription.unsubscribe();
   }
 }

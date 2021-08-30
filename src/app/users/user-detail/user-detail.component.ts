@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Data } from '@angular/router';
 import { IImage } from '../interfaces/IImage';
 import { IMember } from '../interfaces/IMember';
+import { PresenceService } from '../../_services/presence.service';
 
 @Component({
   selector: 'app-user-detail',
@@ -28,7 +29,10 @@ export class UserDetailComponent implements OnInit {
     },
   ];
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(
+    private route: ActivatedRoute,
+    public presenceService: PresenceService
+  ) {}
 
   ngOnInit(): void {
     this.route.data.subscribe((data: Data) => {
